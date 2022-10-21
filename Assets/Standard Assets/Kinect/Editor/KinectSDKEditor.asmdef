@@ -1,0 +1,16 @@
+{
+    "name": "KinectSDKEditor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:249570a9108e385438bf0abd2d6a3dfe"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
