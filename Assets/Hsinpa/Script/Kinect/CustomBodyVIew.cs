@@ -1,21 +1,45 @@
+using Shingrix.Mode.Game;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Kinect = Windows.Kinect;
 
 namespace Hsinpa.KinectWrap {
-    public class CustomBodyVIew : MonoBehaviour
+    public class CustomBodyView : MonoBehaviour
     {
+        [SerializeField]
+        private float scale;
+
+        [SerializeField]
+        private Vector3 position_offset;
+
         public BodySourceManager BodySourceManager;
         public Material mJointMat;
 
         private Dictionary<ulong, GameObject> _Bodies = new Dictionary<ulong, GameObject>();
-        private Dictionary<Kinect.JointType, Kinect.JointType> _BoneMap = new Dictionary<Kinect.JointType, Kinect.JointType>()
-        {
-            { Kinect.JointType.FootLeft, Kinect.JointType.HandLeft },
-            { Kinect.JointType.AnkleLeft, Kinect.JointType.HandRight },
+        private Dictionary<uint, TrackerStruct> _TrackTable = new Dictionary<uint, TrackerStruct>();
+
+        public List<TrackerStruct> _trackerStructs = new List<TrackerStruct>();
+
+        private List<Kinect.JointType> _BodyPart = new List<Kinect.JointType>() {
+            Kinect.JointType.HandLeft, Kinect.JointType.HandRight
         };
 
+        public List<TrackerStruct> GetTrackerStructs() {
+            _trackerStructs.Clear();
+
+            foreach (var keyPair in _TrackTable)
+                _trackerStructs.Add(keyPair.Value);
+
+            return _trackerStructs;
+        }
+
+        public TrackerStruct GetTrackerStruct(uint id)
+        {
+            if (_TrackTable.TryGetValue(id, out var trackerStruct))
+                return trackerStruct;
+            return default(TrackerStruct);
+        }
 
         void Update()
         {
@@ -73,19 +97,22 @@ namespace Hsinpa.KinectWrap {
         private GameObject CreateBodyObject(ulong id)
         {
             GameObject body = new GameObject("Body:" + id);
+            int bodyPartLens = _BodyPart.Count;
 
-            for (Kinect.JointType jt = Kinect.JointType.SpineBase; jt <= Kinect.JointType.ThumbRight; jt++)
+            for (uint i = 0; i < bodyPartLens; i++)
             {
-                GameObject jointObj = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-
-                LineRenderer lr = jointObj.AddComponent<LineRenderer>();
-                lr.SetVertexCount(2);
-                lr.material = mJointMat;
-                lr.SetWidth(0.05f, 0.05f);
-
+                GameObject jointObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 jointObj.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-                jointObj.name = jt.ToString();
+                jointObj.name = _BodyPart[(int)i].ToString();
                 jointObj.transform.parent = body.transform;
+                jointObj.transform.position = new Vector3(-10, -10, 0);
+                uint part_id = (uint) ((id * 10) + i);
+
+                _TrackTable.Add(part_id, new TrackerStruct() {
+                    index = (int)part_id,
+                    position = jointObj.transform.position,
+                    bounds = new Bounds(jointObj.transform.position, new Vector3(0.1f, 0.1f,0.1f)) 
+                });
             }
 
             return body;
@@ -93,45 +120,28 @@ namespace Hsinpa.KinectWrap {
 
         private void RefreshBodyObject(Kinect.Body body, GameObject bodyObject)
         {
-            for (Kinect.JointType jt = Kinect.JointType.SpineBase; jt <= Kinect.JointType.ThumbRight; jt++)
-            {
-                Kinect.Joint sourceJoint = body.Joints[jt];
-                Kinect.Joint? targetJoint = null;
+            int bodyPartLens = _BodyPart.Count;
 
-                if (_BoneMap.ContainsKey(jt))
-                {
-                    targetJoint = body.Joints[_BoneMap[jt]];
-                }
+            for (uint i = 0; i < bodyPartLens; i++)
+            {
+                uint part_id = (uint)((body.TrackingId * 10) + i);
+                Kinect.JointType jt = _BodyPart[(int)i];
+
+                Kinect.Joint sourceJoint = body.Joints[jt];
 
                 Transform jointObj = bodyObject.transform.Find(jt.ToString());
                 jointObj.localPosition = GetVector3FromJoint(sourceJoint);
 
-                LineRenderer lr = jointObj.GetComponent<LineRenderer>();
-                if (targetJoint.HasValue)
-                {
-                    lr.SetPosition(0, jointObj.localPosition);
-                    lr.SetPosition(1, GetVector3FromJoint(targetJoint.Value));
-                    lr.SetColors(GetColorForState(sourceJoint.TrackingState), GetColorForState(targetJoint.Value.TrackingState));
+                jointObj.localPosition = jointObj.localPosition * scale;
+                jointObj.localPosition = jointObj.localPosition + position_offset;
+
+                if (_TrackTable.TryGetValue(part_id, out var trackerStruct)) {
+                    var jointPosition = jointObj.localPosition;
+                    jointPosition.z = 0;
+                    trackerStruct.UpdatePosition(jointPosition);
+
+                    _TrackTable[part_id] = trackerStruct;
                 }
-                else
-                {
-                    lr.enabled = false;
-                }
-            }
-        }
-
-        private static Color GetColorForState(Kinect.TrackingState state)
-        {
-            switch (state)
-            {
-                case Kinect.TrackingState.Tracked:
-                    return Color.green;
-
-                case Kinect.TrackingState.Inferred:
-                    return Color.red;
-
-                default:
-                    return Color.black;
             }
         }
 
@@ -139,6 +149,8 @@ namespace Hsinpa.KinectWrap {
         {
             return new Vector3(joint.Position.X * 10, joint.Position.Y * 10, joint.Position.Z * 10);
         }
+
+
 
     }
 }
