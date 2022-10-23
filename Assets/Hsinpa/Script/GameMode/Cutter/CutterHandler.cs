@@ -76,7 +76,7 @@ namespace Shingrix.Mode.Game
         private void ProcessPossibleCollider() {
             var allBateriaCol = m_bacteriaSpawner.BateriaList;
             int bacteriaCount = allBateriaCol.Count;
-            var filteredBacteria = allBateriaCol.All(x => x.transform.position.y > ShingrixStatic.Bacteria.midPosition);
+            var filteredBacteria = allBateriaCol.All(x => x.transform.position.y > ShingrixStatic.Bacteria.cuttablePoint);
             var trackers = m_tracker.GetTrackers();
 
             foreach (var bacteria in allBateriaCol) {

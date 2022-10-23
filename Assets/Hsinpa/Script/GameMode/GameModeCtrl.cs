@@ -30,7 +30,7 @@ namespace Shingrix.Mode
             m_kinectTracker = new KinectTracker(m_customBodyView);
             m_mouseTracker = new MouseTracker(Camera.main);
 
-            m_cutter = new CutterHandler(m_bacteriaSpawner, m_kinectTracker);
+            m_cutter = new CutterHandler(m_bacteriaSpawner, m_mouseTracker);
         }
 
         public void Enter()
@@ -48,7 +48,7 @@ namespace Shingrix.Mode
 
         private void Update()
         {
-            //m_mouseTracker.OnUpdate();
+            m_mouseTracker.OnUpdate();
             m_kinectTracker.OnUpdate();
             m_cutter.OnUpdate();
             m_bacteriaSpawner.OnUpdate();
