@@ -1,0 +1,34 @@
+{
+    "name": "CustomActions",
+    "maps": [
+        {
+            "name": "InputAction",
+            "id": "d4a94d3a-130e-48db-a1e4-05aae248d0e3",
+            "actions": [
+                {
+                    "name": "CaptureScreen",
+                    "type": "Button",
+                    "id": "9d0781b1-15a8-4098-b4cf-c1a9ceadebc6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "896cec95-623d-40d5-8af2-b46433dc5e2c",
+                    "path": "<Keyboard>/#(P)",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CaptureScreen",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

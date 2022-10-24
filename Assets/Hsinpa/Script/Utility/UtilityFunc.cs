@@ -405,6 +405,22 @@ namespace Hsinpa.Utility
 			    Debug.LogError(e.Message + " \n " + json);
 			    return fallback;
 			}
-}
+		}
+
+		public static void SaveRTToFile(RenderTexture rt, string path)
+		{
+			RenderTexture.active = rt;
+			Texture2D tex = new Texture2D(rt.width, rt.height, TextureFormat.RGB24, false);
+			tex.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);
+			RenderTexture.active = null;
+
+			byte[] bytes;
+			bytes = tex.EncodeToPNG();
+
+			System.IO.File.WriteAllBytes(path, bytes);
+			Debug.Log("Saved to " + path);
+
+			UnityEngine.Object.Destroy(tex);
+		}
 	}
 }
