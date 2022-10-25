@@ -13,7 +13,7 @@ namespace Shingrix
 
             public const float spawnPosition = -7.5f;
             public const float midPosition = 0.5f;
-            public const float cuttablePoint = -0.75f;
+            public const float cuttablePoint = -1.8f;
 
             public static Vector2 vanishPositionYZ = new Vector2(3.8f, 0);
 

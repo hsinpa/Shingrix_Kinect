@@ -56,18 +56,21 @@ namespace Shingrix.Mode.Game
 
                         //Ignore, if cut too shallow
                         float distance = Vector3.Distance(bacteria.Contact_Point, tracker.bounds.center);
+
                         if (distance < (bacteria.Collider.bounds.size.x * 0.5f)) continue;
 
                         var cutDirection = bacteria.GetVector(tracker.bounds.center);
                         var plane = Vector3.Cross(cutDirection, Vector3.forward);
                         var cutCenter = Vector3.Lerp(bacteria.Contact_Point, tracker.bounds.center, 0.5f);
+                        cutCenter = bacteria.Collider.bounds.ClosestPoint(cutCenter);
 
                         GameObject[] cutPieces = bacteria.gameObject.SliceInstantiate(cutCenter, plane, bacteria.cutMaterial);
 
-                        if (cutPieces != null && cutPieces.Length == 2)
+                        if (cutPieces != null && cutPieces.Length == 2) {
                             m_cutPieceProcessor.Register(cutPieces[0], cutPieces[1], plane, cutDirection);
 
-                        m_bacteriaSpawner.EnqueueDeleteObject(bacteria);
+                            m_bacteriaSpawner.EnqueueDeleteObject(bacteria);
+                        }
                     }
                 }
             }
@@ -75,12 +78,10 @@ namespace Shingrix.Mode.Game
 
         private void ProcessPossibleCollider() {
             var allBateriaCol = m_bacteriaSpawner.BateriaList;
-            int bacteriaCount = allBateriaCol.Count;
-            var filteredBacteria = allBateriaCol.All(x => x.transform.position.y > ShingrixStatic.Bacteria.cuttablePoint);
             var trackers = m_tracker.GetTrackers();
 
             foreach (var bacteria in allBateriaCol) {
-                if (bacteria.transform.position.y < 0) continue;
+                if (bacteria.transform.position.y < ShingrixStatic.Bacteria.cuttablePoint) continue;
 
                 foreach (var tracker in trackers)
                 {
