@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: ce436f04683561f4db5ec65be39fcbbd
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Nolan Next
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 1d66b56f1076d754f9baa91a408eb935, type: 3}
+  - {fileID: 12800000, guid: a99fba47878447143af8410ef6b1c755, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

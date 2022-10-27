@@ -23,5 +23,28 @@ namespace Shingrix
             public const int maxBacteriaSize = 10;
             public const float spawnTimeStep = 1.7f;
         }
+
+        public class GameMode {
+            public const int Time = 10;
+            public const int WaitReadyTime = 3;
+            public const int WaitEndingTime = 8;
+        }
+
+        public class Event {
+
+            public const string GameModeTimeup = "event@gamemode_timeup";
+            public const string GameModeCutObject = "event@gamemode_cutobject";
+
+            public const string IdleModeEnter = "event@idlemode_enter";
+            public const string IdleModeEnd = "event@idlemode_end";
+
+            public const string GameModeEnter = "event@gamemode_enter";
+            public const string RankModeEnter = "event@rankmode_enter";
+        }
+
+        public class Data {
+            public static string UserName = "";
+            public static int UserScore = 0;
+        }
     }
 }

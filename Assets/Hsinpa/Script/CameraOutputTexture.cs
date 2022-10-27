@@ -54,7 +54,7 @@ namespace Hsinpa.Render {
         void Start()
         {
             customInput = new CustomActions();
-            customInput.Enable();
+            customInput.GameMode.Enable();
 
             debugRawImage.gameObject.SetActive(false);
             renderRawImage.texture = renderTextureOutput;
@@ -65,7 +65,7 @@ namespace Hsinpa.Render {
                 renderRawImage.texture = renderTextureInput;
             }
 
-            customInput.InputAction.CaptureScreen.performed += CaptureScreen_performed;
+            customInput.GameMode.CaptureScreen.performed += CaptureScreen_performed;
         }
 
         void Update()
