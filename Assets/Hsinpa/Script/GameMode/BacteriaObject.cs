@@ -24,6 +24,19 @@ namespace Shingrix.Mode.Game
         private int contact_index;
         public int Contact_Index => contact_index;
 
+        private float _moveSpeed, _rotateSpeed;
+        public float MoveSpeed => _moveSpeed;
+        public float RotationSpeed => _rotateSpeed;
+
+        private Vector3 _angularVelocity;
+        public Vector3 AngularVelocity => _angularVelocity;
+
+        public void SetUp(float maxSpeed, float minSpeed, int maxRotation, int minRotation) {
+            _moveSpeed = Random.Range(minSpeed, maxSpeed);
+            _rotateSpeed = Random.Range(minRotation, maxRotation);
+            _angularVelocity = new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1));
+        }
+
         public void SetCutterContactPoint(int index, Vector3 p_contact_point) {
             contact_index = index;
             contact_point = p_contact_point;
