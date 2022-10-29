@@ -19,7 +19,7 @@ namespace Shingrix.Mode
             m_lowerVideoPlayer = lowerVideoPlayer;
 
             m_idleInput.IdleMode.Awake.performed += (callabck) => {
-                Hsinpa.Utility.SimpleEventSystem.Send(ShingrixStatic.Event.IdleModeEnd);
+                Hsinpa.Utility.SimpleEventSystem.Send(ShingrixStatic.Event.LoginModeEnter);
             };
         }
         

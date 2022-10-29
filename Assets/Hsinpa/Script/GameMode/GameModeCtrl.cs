@@ -1,5 +1,6 @@
 using Hsinpa.KinectWrap;
 using Hsinpa.Utility;
+using Shingrix.Data;
 using Shingrix.Mode.Game;
 using Shingrix.UI;
 using System.Collections;
@@ -26,9 +27,13 @@ namespace Shingrix.Mode
         private CutterHandler m_cutter;
         
         private int m_score_point;
+        private RankModel m_rankModel;
+        ShingrixStatic.RankStruct m_rankStruct;
 
-        public void SetUp(GameModeView gameModeView) {
+        public void SetUp(GameModeView gameModeView, RankModel rankModel) {
             m_gameModeView = gameModeView;
+            m_rankModel = rankModel;
+
             m_digitalTimer = new DigitalTimer();
             m_digitalTimer.SetTimeType(DigitalTimer.Type.Timer_CountDown);
             m_bacteriaSpawner = new BacteriaSpawner(m_bacteriaPrefab, this.transform);
@@ -51,6 +56,8 @@ namespace Shingrix.Mode
             m_gameModeView.ShowReadyUI();
             gameObject.SetActive(true);
 
+            m_rankStruct = new ShingrixStatic.RankStruct { id = System.Guid.NewGuid().ToString(), name = ShingrixStatic.Data.UserName};
+
             _ = Hsinpa.Utility.UtilityFunc.DoDelayWork(ShingrixStatic.GameMode.WaitReadyTime, () =>
             {
                 m_gameModeView.ShowStaticBoard();
@@ -60,7 +67,12 @@ namespace Shingrix.Mode
 
         public void Leave()
         {
-            ShingrixStatic.Data.UserScore = m_score_point;
+            ShingrixStatic.Data.UserName = "";
+            m_rankStruct.score = m_score_point;
+            m_rankStruct.timestamp = System.DateTimeOffset.Now.ToUnixTimeSeconds();
+            m_rankModel.PushCurrentRankStruct(m_rankStruct);
+            m_rankModel.SaveToDisk();
+
             gameObject.SetActive(false);
             m_gameModeView?.gameObject.SetActive(false);
             m_digitalTimer.StopTimer();
@@ -93,7 +105,7 @@ namespace Shingrix.Mode
             _ = Hsinpa.Utility.UtilityFunc.DoDelayWork(ShingrixStatic.GameMode.WaitEndingTime, 
                 () => {
                     if (this != null)
-                        SimpleEventSystem.Send(ShingrixStatic.Event.GameModeTimeup, m_score_point);
+                        SimpleEventSystem.Send(ShingrixStatic.Event.GameModeTimeup, m_rankStruct);
                 });
         }
 

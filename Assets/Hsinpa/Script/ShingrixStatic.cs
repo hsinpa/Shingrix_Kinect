@@ -25,7 +25,7 @@ namespace Shingrix
         }
 
         public class GameMode {
-            public const int Time = 10;
+            public const int Time = 90;
             public const int WaitReadyTime = 3;
             public const int WaitEndingTime = 8;
         }
@@ -36,15 +36,32 @@ namespace Shingrix
             public const string GameModeCutObject = "event@gamemode_cutobject";
 
             public const string IdleModeEnter = "event@idlemode_enter";
-            public const string IdleModeEnd = "event@idlemode_end";
-
+            public const string LoginModeEnter = "event@loginmode_enter";
             public const string GameModeEnter = "event@gamemode_enter";
             public const string RankModeEnter = "event@rankmode_enter";
         }
 
         public class Data {
             public static string UserName = "";
-            public static int UserScore = 0;
+        }
+
+        public class IO {
+            public const string FilePath = "game_saves.json";
+        }
+
+        [System.Serializable]
+        public struct RankSetsStruct {
+            public List<RankStruct> sets;
+        }
+
+        [System.Serializable]
+        public class RankStruct {
+            public string id;
+            public string name;
+            public int score;
+            public long timestamp;
+
+            public bool IsValid => !string.IsNullOrEmpty(id);
         }
     }
 }

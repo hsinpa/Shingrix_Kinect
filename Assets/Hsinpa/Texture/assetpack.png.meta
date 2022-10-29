@@ -136,7 +136,7 @@ TextureImporter:
         width: 330
         height: 61
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -157,7 +157,7 @@ TextureImporter:
         width: 180
         height: 180
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -165,6 +165,48 @@ TextureImporter:
       bones: []
       spriteID: 1254d5b0b1076604a90ecdc13acb0ab8
       internalID: -378597769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rank_a
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 10
+        width: 299
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 149, y: 0, z: 149, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3e572f7528b7ef4e92e429b5b5e9b1a
+      internalID: -916785084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rank_b
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 122
+        width: 299
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 149, y: 0, z: 149, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e95eb6163fddedb4aa9601d1d468abd5
+      internalID: -828550574
       vertices: []
       indices: 
       edges: []
@@ -180,6 +222,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      rank_a: -916785084
+      rank_b: -828550574
       game_mode_title: 354770279
       game_mode_score: -378597769
   spritePackingTag: 

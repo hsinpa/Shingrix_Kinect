@@ -59,6 +59,8 @@ namespace Shingrix.Mode
             m_page_index = 0;
             m_loginModeView.gameObject.SetActive(true);
 
+            m_loginModeView.NameInputField.text = ShingrixStatic.Data.UserName;
+
             m_loginModeView.RankHint.EnableHintSprite(false);
             m_loginModeView.PlayHint.EnableHintSprite(false);
             SetHintBtn(m_loginModeView.InputHint);
@@ -116,6 +118,7 @@ namespace Shingrix.Mode
             if (m_hintButton == m_loginModeView.RankHint)
             {
                 Debug.Log("Go to Rank Mode");
+                Hsinpa.Utility.SimpleEventSystem.Send(ShingrixStatic.Event.RankModeEnter);
             }
 
             if (m_hintButton == m_loginModeView.InputHint)
