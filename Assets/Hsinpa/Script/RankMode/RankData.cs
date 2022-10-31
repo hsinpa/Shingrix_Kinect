@@ -16,10 +16,14 @@ namespace Shingrix.Data
         private string _username;
         public string Username => _username;
 
+        private string _id;
+        public string ID => _id;
+
         private bool _isHighlight = false;
         public bool IsHighlight => _isHighlight;
 
-        public RankData(int p_score, int p_index, string p_username) {
+        public RankData(string p_id, int p_score, int p_index, string p_username) {
+            this._id = p_id;
             this._score = p_score;
             this._index = p_index;
             this._username = p_username;

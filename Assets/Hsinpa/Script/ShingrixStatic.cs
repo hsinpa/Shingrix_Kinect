@@ -39,9 +39,9 @@ namespace Shingrix
         }
 
         public class GameMode {
-            public const int Time = 60;
+            public const int Time = 12;
             public const int WaitReadyTime = 3;
-            public const int WaitEndingTime = 8;
+            public const int WaitEndingTime = 3;
 
             public const int LoginBackToIdleTime = 20;
         }

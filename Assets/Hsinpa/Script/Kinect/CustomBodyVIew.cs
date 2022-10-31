@@ -15,6 +15,9 @@ namespace Hsinpa.KinectWrap {
         [SerializeField]
         private Vector3 position_offset;
 
+        [SerializeField]
+        private GameObject handTrackPrefab;
+
         public BodySourceManager BodySourceManager;
         public Material mJointMat;
 
@@ -120,7 +123,9 @@ namespace Hsinpa.KinectWrap {
 
             for (uint i = 0; i < bodyPartLens; i++)
             {
-                GameObject jointObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                //GameObject jointObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                GameObject jointObj = GameObject.Instantiate(handTrackPrefab);
+
                 jointObj.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
                 jointObj.name = _BodyPart[(int)i].ToString();
                 jointObj.transform.parent = body.transform;

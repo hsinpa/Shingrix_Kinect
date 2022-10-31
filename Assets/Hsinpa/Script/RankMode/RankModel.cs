@@ -22,13 +22,6 @@ namespace Shingrix.Data {
             m_fullSets.sets.Add(p_rankStruct);
         }
 
-        public async Task<int> GetIndex(ShingrixStatic.RankStruct rankStruct) {
-            return await Task.Run(() =>
-            {
-                return m_fullSets.sets.FindIndex(x => x.id == rankStruct.id);
-            });
-        }
-
         public async Task<List<ShingrixStatic.RankStruct>> GetScoreSortList() {
             var sorted = await Task.Run(() =>
             {

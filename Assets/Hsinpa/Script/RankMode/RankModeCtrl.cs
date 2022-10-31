@@ -3,6 +3,7 @@ using Shingrix.Data;
 using Shingrix.UI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -48,7 +49,12 @@ namespace Shingrix.Mode
         }
 
         public async void LocateToRankStruct(ShingrixStatic.RankStruct rankStruct) {
-            _index = await m_rankModel.GetIndex(rankStruct);
+
+            await Task.Yield();
+            _index = await _rankModelView.RankScrollView.GetIndex(rankStruct);
+
+            if (_index < 0) return;
+
             _rankModelView.RankScrollView.SetHighLight(_index);
             _rankModelView.RankScrollView.ScrollToIndex(_index, 0.5f);
         }
