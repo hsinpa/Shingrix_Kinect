@@ -1,0 +1,6 @@
+{
+    "kinect_pos_offset_x": 0,
+	"kinect_pos_offset_y" : 0,
+	"kinect_pos_offset_z": 0,
+	"kinect_scale" : 0.3
+}

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 namespace Shingrix.UI
 {
@@ -18,6 +19,11 @@ namespace Shingrix.UI
         [SerializeField]
         private TextMeshProUGUI scoreField;
 
+        [SerializeField]
+        private Image nameContainer;
+
+        private Color whiteColor = Color.white;
+
         public override void Initialize()
         {
 
@@ -28,6 +34,11 @@ namespace Shingrix.UI
             indexField.text = (itemData.Index + 1).ToString();
             usernameField.text = itemData.Username;
             scoreField.text = itemData.Score.ToString();
+
+            if (itemData.IsHighlight)
+                nameContainer.color = new Color(1, 0.6f, 0.6f);
+            else
+                nameContainer.color = whiteColor;
         }
     }
 }

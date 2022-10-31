@@ -63,7 +63,7 @@ namespace Shingrix.Data {
         }
 
         private string GetFullFilePath() {
-            return Path.Combine(Application.persistentDataPath, ShingrixStatic.IO.FilePath);
+            return Path.Combine(Application.persistentDataPath, ShingrixStatic.IO.GameSavePath);
         }
     }
 }

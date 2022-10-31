@@ -149,6 +149,15 @@ namespace Hsinpa
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Any"",
+                    ""type"": ""Button"",
+                    ""id"": ""c4cbcf09-a485-4ac1-a8e3-ad6ec04b1965"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -239,6 +248,17 @@ namespace Hsinpa
                     ""action"": ""Confirm"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3bfb95a-969f-406b-9473-0addd165ae4e"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Any"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -259,6 +279,7 @@ namespace Hsinpa
             m_LoginMode_Right = m_LoginMode.FindAction("Right", throwIfNotFound: true);
             m_LoginMode_Left = m_LoginMode.FindAction("Left", throwIfNotFound: true);
             m_LoginMode_Confirm = m_LoginMode.FindAction("Confirm", throwIfNotFound: true);
+            m_LoginMode_Any = m_LoginMode.FindAction("Any", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -390,6 +411,7 @@ namespace Hsinpa
         private readonly InputAction m_LoginMode_Right;
         private readonly InputAction m_LoginMode_Left;
         private readonly InputAction m_LoginMode_Confirm;
+        private readonly InputAction m_LoginMode_Any;
         public struct LoginModeActions
         {
             private @CustomActions m_Wrapper;
@@ -400,6 +422,7 @@ namespace Hsinpa
             public InputAction @Right => m_Wrapper.m_LoginMode_Right;
             public InputAction @Left => m_Wrapper.m_LoginMode_Left;
             public InputAction @Confirm => m_Wrapper.m_LoginMode_Confirm;
+            public InputAction @Any => m_Wrapper.m_LoginMode_Any;
             public InputActionMap Get() { return m_Wrapper.m_LoginMode; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -427,6 +450,9 @@ namespace Hsinpa
                     @Confirm.started -= m_Wrapper.m_LoginModeActionsCallbackInterface.OnConfirm;
                     @Confirm.performed -= m_Wrapper.m_LoginModeActionsCallbackInterface.OnConfirm;
                     @Confirm.canceled -= m_Wrapper.m_LoginModeActionsCallbackInterface.OnConfirm;
+                    @Any.started -= m_Wrapper.m_LoginModeActionsCallbackInterface.OnAny;
+                    @Any.performed -= m_Wrapper.m_LoginModeActionsCallbackInterface.OnAny;
+                    @Any.canceled -= m_Wrapper.m_LoginModeActionsCallbackInterface.OnAny;
                 }
                 m_Wrapper.m_LoginModeActionsCallbackInterface = instance;
                 if (instance != null)
@@ -449,6 +475,9 @@ namespace Hsinpa
                     @Confirm.started += instance.OnConfirm;
                     @Confirm.performed += instance.OnConfirm;
                     @Confirm.canceled += instance.OnConfirm;
+                    @Any.started += instance.OnAny;
+                    @Any.performed += instance.OnAny;
+                    @Any.canceled += instance.OnAny;
                 }
             }
         }
@@ -469,6 +498,7 @@ namespace Hsinpa
             void OnRight(InputAction.CallbackContext context);
             void OnLeft(InputAction.CallbackContext context);
             void OnConfirm(InputAction.CallbackContext context);
+            void OnAny(InputAction.CallbackContext context);
         }
     }
 }

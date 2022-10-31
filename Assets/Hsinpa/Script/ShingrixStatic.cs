@@ -6,6 +6,14 @@ namespace Shingrix
 {
     public class ShingrixStatic
     {
+        [System.Serializable]
+        public struct ShingrixKineticData {
+            public float kinect_pos_offset_x;
+            public float kinect_pos_offset_y;
+            public float kinect_pos_offset_z;
+            public float kinect_scale;
+        }
+
         public class Bacteria {
             public static Vector2 screenWidth = new Vector2(-2f, 2f); //Left / Right
             public static Vector2 constraintHeight = new Vector2(-5, 7); // Bottom / Top
@@ -34,10 +42,11 @@ namespace Shingrix
             public const int Time = 60;
             public const int WaitReadyTime = 3;
             public const int WaitEndingTime = 8;
+
+            public const int LoginBackToIdleTime = 20;
         }
 
         public class Event {
-
             public const string GameModeTimeup = "event@gamemode_timeup";
             public const string GameModeCutObject = "event@gamemode_cutobject";
 
@@ -47,6 +56,7 @@ namespace Shingrix
             public const string RankModeEnter = "event@rankmode_enter";
 
             public const string ObjPoolKeyBateria = "pool@bacteria";
+            public const string ObjPoolKeybreakParticle = "pool@break_particle";
         }
 
         public class Data {
@@ -54,8 +64,8 @@ namespace Shingrix
         }
 
         public class IO {
-            public const string FilePath = "game_saves.json";
-
+            public const string GameSavePath = "game_saves.json";
+            public const string KinectConfigPath = "kinect_config.json";
         }
 
         [System.Serializable]

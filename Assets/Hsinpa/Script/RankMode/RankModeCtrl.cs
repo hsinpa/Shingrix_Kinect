@@ -10,15 +10,18 @@ namespace Shingrix.Mode
 {
     public class RankModeCtrl : MonoBehaviour, IMode
     {
+        LowerSparkleView m_lowerSparkleView;
         RankModeView _rankModelView;
         CustomActions m_rankInput;
         RankModel m_rankModel;
 
+
         int _index;
 
-        public void SetUp(RankModeView rankModeView, RankModel rankModel) {
+        public void SetUp(RankModeView rankModeView, LowerSparkleView lowerSparkleView, RankModel rankModel) {
             this.m_rankInput = new CustomActions();
             this._rankModelView = rankModeView;
+            this.m_lowerSparkleView = lowerSparkleView;
             this.m_rankModel = rankModel;
 
             m_rankInput.LoginMode.Down.performed += DirectionAction;
@@ -34,18 +37,20 @@ namespace Shingrix.Mode
             var sorted = await m_rankModel.GetScoreSortList();
             _rankModelView.gameObject.SetActive(true);
             _rankModelView.RankScrollView.SetUp(sorted);
+            m_lowerSparkleView.gameObject.SetActive(true);
         }
 
         public void Leave()
         {
             m_rankInput.LoginMode.Disable();
             _rankModelView.gameObject.SetActive(false);
+            m_lowerSparkleView.gameObject.SetActive(false);
         }
 
         public async void LocateToRankStruct(ShingrixStatic.RankStruct rankStruct) {
-            int index = await m_rankModel.GetIndex(rankStruct);
-
-            _rankModelView.RankScrollView.ScrollToIndex(index, 0.5f);
+            _index = await m_rankModel.GetIndex(rankStruct);
+            _rankModelView.RankScrollView.SetHighLight(_index);
+            _rankModelView.RankScrollView.ScrollToIndex(_index, 0.5f);
         }
 
         private void DirectionAction(InputAction.CallbackContext inputAction)

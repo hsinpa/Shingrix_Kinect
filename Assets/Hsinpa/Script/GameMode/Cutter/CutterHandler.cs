@@ -14,7 +14,7 @@ namespace Shingrix.Mode.Game
 
         Dictionary<int, BacteriaObject> m_trackerOccupyTable = new Dictionary<int, BacteriaObject>();
 
-        public System.Action BacteriaCutEvent;
+        public System.Action<Vector3, Vector3> BacteriaCutEvent;
 
         public CutterHandler(BacteriaSpawner bacteriaSpawner, ITracker tracker) {
             m_bacteriaSpawner = bacteriaSpawner;
@@ -61,6 +61,8 @@ namespace Shingrix.Mode.Game
 
                         if (distance < (bacteria.Collider.bounds.size.x * 0.5f)) continue;
 
+                        var bacteriaPosition = bacteria.transform.position;
+                        var bacteriaScale = bacteria.transform.localScale;
                         var cutDirection = bacteria.GetVector(tracker.bounds.center);
                         var plane = Vector3.Cross(cutDirection, Vector3.forward);
                         var cutCenter = Vector3.Lerp(bacteria.Contact_Point, tracker.bounds.center, 0.5f);
@@ -73,9 +75,11 @@ namespace Shingrix.Mode.Game
 
                             m_cutPieceProcessor.Register(cutPieces[0], cutPieces[1], plane, cutDirection);
 
+                            bacteria.PlayBreakEffect();
+
                             m_bacteriaSpawner.EnqueueDeleteObject(bacteria);
 
-                            BacteriaCutEvent?.Invoke();
+                            BacteriaCutEvent?.Invoke(bacteriaPosition, bacteriaScale);
                         }
                     }
                 }
@@ -103,7 +107,6 @@ namespace Shingrix.Mode.Game
                     if (intersect) {
                         //Debug.Log("Intersect " + bacteria.name);
                         bacteria.SetCutterContactPoint(tracker.index, trackBound.center);
-
                         m_trackerOccupyTable.Add(tracker.index, bacteria);
                         return;
                     }

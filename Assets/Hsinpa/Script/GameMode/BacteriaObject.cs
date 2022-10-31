@@ -10,6 +10,9 @@ namespace Shingrix.Mode.Game
         private Collider m_collider;
         public Collider Collider => this.m_collider;
 
+        [SerializeField]
+        private ParticleSystem m_break_particle;
+
         public Material cutMaterial;
 
         private Vector3 contact_transform_position;
@@ -45,6 +48,10 @@ namespace Shingrix.Mode.Game
 
         public Vector3 GetVector(Vector3 p_exit_point) {
             return (p_exit_point - (Contact_Point)).normalized;
+        }
+
+        public void PlayBreakEffect() {
+            m_break_particle.Play();
         }
     }
 }

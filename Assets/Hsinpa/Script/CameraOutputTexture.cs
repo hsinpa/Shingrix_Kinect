@@ -65,7 +65,7 @@ namespace Hsinpa.Render {
                 renderRawImage.texture = renderTextureInput;
             }
 
-            customInput.GameMode.CaptureScreen.performed += CaptureScreen_performed;
+            //customInput.GameMode.CaptureScreen.performed += CaptureScreen_performed;
         }
 
         void Update()

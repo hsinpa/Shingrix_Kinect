@@ -2,6 +2,7 @@ using Hsinpa;
 using Shingrix.UI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,7 @@ namespace Shingrix.Mode
     public class LoginModeCtrl : MonoBehaviour, IMode
     {
         LoginModeView m_loginModeView;
+        LowerSparkleView m_lowerSparkleView;
         CustomActions m_loginInput;
 
         int m_page_index = 0;
@@ -18,11 +20,13 @@ namespace Shingrix.Mode
         HintButton m_hintButton;
 
         Dictionary<HintButton, ActionStructs[]> hintBtnTable = new Dictionary<HintButton, ActionStructs[]>();
+        private float m_delay_time;
 
-        public void SetUp(LoginModeView loginModeView)
+        public void SetUp(LoginModeView loginModeView, LowerSparkleView lowerSparkleView)
         {
             m_loginInput = new CustomActions();
             m_loginModeView = loginModeView;
+            m_lowerSparkleView = lowerSparkleView;
 
             m_loginInput.LoginMode.NextAction.performed += InputNextAction;
             m_loginInput.LoginMode.Down.performed += DirectionAction;
@@ -30,6 +34,7 @@ namespace Shingrix.Mode
             m_loginInput.LoginMode.Right.performed += DirectionAction;
             m_loginInput.LoginMode.Left.performed += DirectionAction;
             m_loginInput.LoginMode.Confirm.performed += ConfirmAction;
+            m_loginInput.LoginMode.Any.performed += AnyAction;
 
             //Name Input Field
             hintBtnTable.Add(m_loginModeView.InputHint, new ActionStructs[] {
@@ -54,17 +59,19 @@ namespace Shingrix.Mode
 
         public void Enter()
         {
+            this.m_delay_time = ShingrixStatic.GameMode.LoginBackToIdleTime + Time.time;
+
             m_loginInput.LoginMode.Enable();
             m_loginModeView.Dispose();
             m_page_index = 0;
             m_loginModeView.gameObject.SetActive(true);
+            m_lowerSparkleView.gameObject.SetActive(true);
 
             m_loginModeView.NameInputField.text = ShingrixStatic.Data.UserName;
 
             m_loginModeView.RankHint.EnableHintSprite(false);
             m_loginModeView.PlayHint.EnableHintSprite(false);
             SetHintBtn(m_loginModeView.InputHint);
-
             gameObject.SetActive(true);
         }
 
@@ -72,8 +79,21 @@ namespace Shingrix.Mode
         {
             m_loginInput.LoginMode.Disable();
             gameObject.SetActive(false);
+
+            m_lowerSparkleView.gameObject.SetActive(false);
             m_loginModeView.gameObject.SetActive(false);
             m_loginModeView.InputHint.SetColor(m_loginModeView.InputHint.OriginalColor);
+        }
+
+        private void Update()
+        {
+            if (!m_loginInput.LoginMode.enabled) return;
+
+            //Overtime, erase data and back to idle page
+            if (m_delay_time < Time.time) {
+                ShingrixStatic.Data.UserName = "";
+                Hsinpa.Utility.SimpleEventSystem.Send(ShingrixStatic.Event.IdleModeEnter);
+            }
         }
 
         #region Input Event
@@ -127,6 +147,10 @@ namespace Shingrix.Mode
             }
         }
 
+        private void AnyAction(InputAction.CallbackContext inputAction)
+        {
+            m_delay_time += ShingrixStatic.GameMode.LoginBackToIdleTime;
+        }
         #endregion
         private bool ProcessNameField() {
             bool IsValid = !string.IsNullOrEmpty(m_loginModeView.NameInputField.text);

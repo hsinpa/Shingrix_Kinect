@@ -26,7 +26,7 @@ namespace Shingrix
 
         [Header("Lower Part UI")]
         [SerializeField]
-        private VideoPlayer m_idleLowerVideoPlayer;
+        private LowerSparkleView m_lowerSparkleView;
 
         [Header("Mode")]
         [SerializeField]
@@ -53,10 +53,10 @@ namespace Shingrix
         void Start()
         {
             m_rankModel = new RankModel();
-            m_idleModeCtrl.SetUp(m_idleUpperVideoPlayer, m_idleLowerVideoPlayer);
+            m_idleModeCtrl.SetUp(m_idleUpperVideoPlayer);
             m_gameModeCtrl.SetUp(m_gameModeView, m_rankModel );
-            m_loginModeCtrl.SetUp(m_loginModeView);
-            m_rankModeCtrl.SetUp(m_rankModeView, m_rankModel);
+            m_loginModeCtrl.SetUp(m_loginModeView, m_lowerSparkleView);
+            m_rankModeCtrl.SetUp(m_rankModeView, m_lowerSparkleView, m_rankModel);
 
             SetMode(m_idleModeCtrl);
         }

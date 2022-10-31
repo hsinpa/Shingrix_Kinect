@@ -15,6 +15,9 @@ namespace Shingrix.Mode
         private BacteriaObject m_bacteriaPrefab;
 
         [SerializeField]
+        private ParticleSystem m_particlePrefab;
+
+        [SerializeField]
         private CustomBodyView m_customBodyView;
 
         private GameModeView m_gameModeView;
@@ -36,12 +39,12 @@ namespace Shingrix.Mode
 
             m_digitalTimer = new DigitalTimer();
             m_digitalTimer.SetTimeType(DigitalTimer.Type.Timer_CountDown);
-            m_bacteriaSpawner = new BacteriaSpawner(m_bacteriaPrefab, this.transform);
+            m_bacteriaSpawner = new BacteriaSpawner(m_bacteriaPrefab, m_particlePrefab, this.transform);
 
             m_kinectTracker = new KinectTracker(m_customBodyView);
             m_mouseTracker = new MouseTracker(Camera.main);
 
-            m_cutter = new CutterHandler(m_bacteriaSpawner, m_kinectTracker);
+            m_cutter = new CutterHandler(m_bacteriaSpawner, m_mouseTracker);
             m_cutter.BacteriaCutEvent += OnBacteriaCutEvent;
         }
 
@@ -109,9 +112,26 @@ namespace Shingrix.Mode
                 });
         }
 
-        private void OnBacteriaCutEvent() {
-                m_score_point++;
-                m_gameModeView?.SetScoreText(m_score_point);
+        private void OnBacteriaCutEvent(Vector3 cutPosition, Vector3 cutScale) {
+            m_score_point++;
+            m_gameModeView?.SetScoreText(m_score_point);
+            var paricleGamobject = Pooling.PoolManager.instance?.ReuseObject(ShingrixStatic.Event.ObjPoolKeybreakParticle);
+
+            try
+            {
+                var breakParticle = paricleGamobject.GetComponent<ParticleSystem>();
+                breakParticle.transform.position = cutPosition;
+                breakParticle.transform.localScale = cutScale;
+                breakParticle.Play();
+
+                _ = Hsinpa.Utility.UtilityFunc.DoDelayWork(1, () => {
+                    Pooling.PoolManager.instance?.Destroy(paricleGamobject);
+                });
+            }
+            catch {
+                Pooling.PoolManager.instance?.Destroy(paricleGamobject);
+            }
+
         }
     }
 }

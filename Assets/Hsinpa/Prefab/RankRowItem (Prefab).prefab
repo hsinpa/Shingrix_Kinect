@@ -650,3 +650,4 @@ MonoBehaviour:
   indexField: {fileID: 5747885063945611741}
   usernameField: {fileID: 5747885064703561174}
   scoreField: {fileID: 5747885064051998487}
+  nameContainer: {fileID: 5747885064752016823}

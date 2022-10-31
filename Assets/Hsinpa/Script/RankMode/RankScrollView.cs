@@ -2,6 +2,7 @@ using FancyScrollView;
 using Shingrix.Data;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 
@@ -15,20 +16,28 @@ namespace Shingrix.UI
         protected override GameObject CellPrefab => cellPrefab;
 
         protected override float CellSize => _cellSize;
+        List<RankData> m_rankList = new List<RankData>();
 
         public void SetUp(List<ShingrixStatic.RankStruct> rankStructs) {
-            List<RankData> rankList = new List<RankData>();
+            this.m_rankList.Clear();
             int rankStructLen = rankStructs.Count;
 
             for (int i = 0; i < rankStructLen; i++) {
-                rankList.Add( new RankData(rankStructs[i].score, i, rankStructs[i].name) );
+                this.m_rankList.Add( new RankData(rankStructs[i].score, i, rankStructs[i].name) );
             }
 
-            UpdateContents(rankList);
+            UpdateContents(this.m_rankList);
         }
 
-        public void ScrollToIndex(int p_index, float p_alignment) {
-            ScrollTo(p_index, 0.1f, alignment: p_alignment);
+        public void SetHighLight(int p_index) {
+            m_rankList[p_index].SetHighlight();
+            UpdateContents(this.m_rankList);
+        }
+
+        public async void ScrollToIndex(int p_index, float p_alignment) {
+            await Task.Yield();
+
+            ScrollTo(p_index, 0.1f, alignment: p_alignment);        
         } 
 
         public void Dispose()

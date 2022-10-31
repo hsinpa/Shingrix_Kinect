@@ -1,6 +1,8 @@
+using Shingrix;
 using Shingrix.Mode.Game;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using Kinect = Windows.Kinect;
 
@@ -18,6 +20,7 @@ namespace Hsinpa.KinectWrap {
 
         private Dictionary<ulong, GameObject> _Bodies = new Dictionary<ulong, GameObject>();
         private Dictionary<uint, TrackerStruct> _TrackTable = new Dictionary<uint, TrackerStruct>();
+        private ShingrixStatic.ShingrixKineticData _kineticData;
 
         public List<TrackerStruct> _trackerStructs = new List<TrackerStruct>();
 
@@ -39,6 +42,22 @@ namespace Hsinpa.KinectWrap {
             if (_TrackTable.TryGetValue(id, out var trackerStruct))
                 return trackerStruct;
             return default(TrackerStruct);
+        }
+
+        private void Start()
+        {
+            _kineticData = new ShingrixStatic.ShingrixKineticData() {
+                kinect_pos_offset_x = position_offset.x, kinect_pos_offset_y = position_offset.y, kinect_pos_offset_z = position_offset.z,
+                kinect_scale = scale
+            };
+
+#if READ_EXTERNAL_DATA
+            string rawData = Hsinpa.Utility.IOUtility.GetFileText(Path.Combine(Application.streamingAssetsPath, ShingrixStatic.IO.KinectConfigPath));
+            if (!string.IsNullOrEmpty(rawData))
+                _kineticData = JsonUtility.FromJson<ShingrixStatic.ShingrixKineticData>(rawData);
+
+            Debug.Log($"_kineticData pos {_kineticData.kinect_pos_offset_x} {_kineticData.kinect_pos_offset_y} {_kineticData.kinect_pos_offset_z}, scale {_kineticData.kinect_scale}");
+#endif
         }
 
         void Update()

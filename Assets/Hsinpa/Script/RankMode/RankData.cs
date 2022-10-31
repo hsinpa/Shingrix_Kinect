@@ -16,10 +16,17 @@ namespace Shingrix.Data
         private string _username;
         public string Username => _username;
 
+        private bool _isHighlight = false;
+        public bool IsHighlight => _isHighlight;
+
         public RankData(int p_score, int p_index, string p_username) {
             this._score = p_score;
             this._index = p_index;
             this._username = p_username;
+        }
+
+        public void SetHighlight() {
+            _isHighlight = true;
         }
     }
 

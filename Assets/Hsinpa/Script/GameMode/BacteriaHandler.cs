@@ -17,16 +17,19 @@ namespace Shingrix.Mode.Game {
         private float m_bacMoveSpeed = 1;
         private int m_bacLength = 0;
         private float nextSpawnTime;
+        private ParticleSystem m_breakParticle;
 
         private Vector3 _cacheVector3 = new Vector3();
         private PoolManager m_poolManager;
 
-        public BacteriaSpawner(BacteriaObject bacteriaPrefab, Transform container) {
+        public BacteriaSpawner(BacteriaObject bacteriaPrefab, ParticleSystem breakParticle, Transform container) {
             this.m_bacteriaPrefab = bacteriaPrefab;
+            this.m_breakParticle = breakParticle;
             this.m_container = container;
 
             this.m_poolManager = Pooling.PoolManager.instance;
             this.m_poolManager.CreatePool(bacteriaPrefab.gameObject, ShingrixStatic.Event.ObjPoolKeyBateria, ShingrixStatic.Bacteria.maxBacteriaSize);
+            this.m_poolManager.CreatePool(breakParticle.gameObject, ShingrixStatic.Event.ObjPoolKeybreakParticle, ShingrixStatic.Bacteria.maxBacteriaSize);
         }
 
         public void OnUpdate() {
@@ -58,6 +61,7 @@ namespace Shingrix.Mode.Game {
             if (nextSpawnTime < Time.time && m_bacLength < ShingrixStatic.Bacteria.maxBacteriaSize) {
                 GameObject spawnRawObject =  this.m_poolManager.ReuseObject(ShingrixStatic.Event.ObjPoolKeyBateria);
                 spawnRawObject.transform.SetParent(this.m_container);
+                spawnRawObject.transform.localScale = Vector3.one;
 
                 BacteriaObject spawnBateria = spawnRawObject.GetComponent<BacteriaObject>();
 
