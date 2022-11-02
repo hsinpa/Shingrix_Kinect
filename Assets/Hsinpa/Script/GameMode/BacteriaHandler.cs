@@ -43,7 +43,12 @@ namespace Shingrix.Mode.Game {
         }
 
         public void Dispose() {
-            Hsinpa.Utility.UtilityFunc.ClearChildObject(m_container);
+            int childCount = m_container.childCount;
+            for (int i = childCount - 1; i>=0; i--)
+            {
+                this.m_poolManager.Destroy(m_container.GetChild(i).gameObject);
+            }
+
             m_waitForDeletionPipe.Clear();
             m_bateriaList.Clear();
             m_bacLength = 0;

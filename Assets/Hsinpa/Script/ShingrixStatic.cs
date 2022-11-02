@@ -20,13 +20,13 @@ namespace Shingrix
             public static Vector2 constraintWidth = new Vector2(-3, 3); // Left / Right
 
             public const float spawnPosition = -7.5f;
-            public const float midPosition = 1.2f;
+            public const float midPosition = 2.0f;
             public const float cuttablePoint = -1.8f;
 
             public static Vector2 vanishPositionYZ = new Vector2(2.8f, 0);
 
             public static Vector3 upwardGeneralVelocity = new Vector3(0, 1, 0);
-            public static Vector3 midGeneralVelocity = new Vector3(0, 0.2f, 1);
+            public static Vector3 midGeneralVelocity = new Vector3(0, 0.1f, 1);
 
             public const int maxBacteriaSize = 10;
             public const float spawnTimeStep = 1.7f;
@@ -39,7 +39,7 @@ namespace Shingrix
         }
 
         public class GameMode {
-            public const int Time = 12;
+            public const int Time = 60;
             public const int WaitReadyTime = 3;
             public const int WaitEndingTime = 3;
 

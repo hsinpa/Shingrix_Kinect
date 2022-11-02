@@ -16,7 +16,6 @@ namespace Shingrix.Mode
         CustomActions m_rankInput;
         RankModel m_rankModel;
 
-
         int _index;
 
         public void SetUp(RankModeView rankModeView, LowerSparkleView lowerSparkleView, RankModel rankModel) {
@@ -49,8 +48,8 @@ namespace Shingrix.Mode
         }
 
         public async void LocateToRankStruct(ShingrixStatic.RankStruct rankStruct) {
+            await Task.Delay(500);
 
-            await Task.Yield();
             _index = await _rankModelView.RankScrollView.GetIndex(rankStruct);
 
             if (_index < 0) return;
@@ -62,7 +61,7 @@ namespace Shingrix.Mode
         private void DirectionAction(InputAction.CallbackContext inputAction)
         {
             int dataCount = m_rankModel.DataArray.Count;
-            int step = 4;
+            int step = 3;
 
             if (inputAction.action == m_rankInput.LoginMode.Down) {
                 _index = Mathf.Clamp(_index + step, 0, dataCount -1);

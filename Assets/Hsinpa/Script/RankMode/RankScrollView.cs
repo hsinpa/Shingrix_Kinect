@@ -25,8 +25,9 @@ namespace Shingrix.UI
             for (int i = 0; i < rankStructLen; i++) {
                 this.m_rankList.Add( new RankData(rankStructs[i].id, rankStructs[i].score, i, rankStructs[i].name) );
             }
-
+            
             UpdateContents(this.m_rankList);
+            UpdatePosition(0);
         }
 
         public async Task<int> GetIndex(ShingrixStatic.RankStruct rankStruct)

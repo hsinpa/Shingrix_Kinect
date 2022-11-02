@@ -13,7 +13,13 @@ namespace Shingrix.Mode.Game
         [SerializeField]
         private ParticleSystem m_break_particle;
 
+        [SerializeField]
+        private Renderer m_renderer;
+
         public Material cutMaterial;
+
+        [SerializeField]
+        private Material[] material_sets;
 
         private Vector3 contact_transform_position;
         private Vector3 contact_point;
@@ -38,6 +44,8 @@ namespace Shingrix.Mode.Game
             _moveSpeed = Random.Range(minSpeed, maxSpeed);
             _rotateSpeed = Random.Range(minRotation, maxRotation);
             _angularVelocity = new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1));
+
+            m_renderer.material = material_sets[Random.Range(0, material_sets.Length)];
         }
 
         public void SetCutterContactPoint(int index, Vector3 p_contact_point) {
@@ -50,8 +58,5 @@ namespace Shingrix.Mode.Game
             return (p_exit_point - (Contact_Point)).normalized;
         }
 
-        public void PlayBreakEffect() {
-            m_break_particle.Play();
-        }
     }
 }

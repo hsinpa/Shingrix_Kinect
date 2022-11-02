@@ -75,8 +75,6 @@ namespace Shingrix.Mode.Game
 
                             m_cutPieceProcessor.Register(cutPieces[0], cutPieces[1], plane, cutDirection);
 
-                            bacteria.PlayBreakEffect();
-
                             m_bacteriaSpawner.EnqueueDeleteObject(bacteria);
 
                             BacteriaCutEvent?.Invoke(bacteriaPosition, bacteriaScale);

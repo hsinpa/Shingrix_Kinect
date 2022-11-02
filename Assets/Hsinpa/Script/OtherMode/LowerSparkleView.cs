@@ -14,7 +14,7 @@ namespace Shingrix.UI
 
         void Start()
         {
-            _rotateVelocity = new Vector3(0, 0, 2 * Time.deltaTime);
+            _rotateVelocity = new Vector3(0, 0, 1.5f * Time.deltaTime);
         }
 
         // Update is called once per frame

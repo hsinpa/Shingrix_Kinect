@@ -22,6 +22,9 @@ namespace Shingrix.UI
         [SerializeField]
         private Image nameContainer;
 
+        [SerializeField]
+        private Sprite[] usernameBackgrounds;
+
         private Color whiteColor = Color.white;
 
         public override void Initialize()
@@ -31,6 +34,8 @@ namespace Shingrix.UI
 
         public override void UpdateContent(RankData itemData)
         {
+            nameContainer.sprite = usernameBackgrounds[itemData.Index % 2];
+
             indexField.text = (itemData.Index + 1).ToString();
             usernameField.text = itemData.Username;
             scoreField.text = itemData.Score.ToString();
