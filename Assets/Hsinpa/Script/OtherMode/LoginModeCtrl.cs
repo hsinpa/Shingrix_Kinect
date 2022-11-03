@@ -1,4 +1,5 @@
 using Hsinpa;
+using Hsinpa.Utility;
 using Shingrix.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -149,6 +150,7 @@ namespace Shingrix.Mode
 
         private void AnyAction(InputAction.CallbackContext inputAction)
         {
+            UniversalAudioSolution.instance.PlayAudio(UniversalAudioSolution.AudioType.UI, ShingrixStatic.Audio.EffectTag, ShingrixStatic.Audio.EffectUI);
             m_delay_time += ShingrixStatic.GameMode.LoginBackToIdleTime;
         }
         #endregion

@@ -9,9 +9,8 @@ namespace Hsinpa.Utility {
         private List<AudioStructure> _audioStructure = new List<AudioStructure>();
 
         [SerializeField]
-        private AudioSRPSet _audioSRPSet;
-        public AudioSRPSet AudioSRPSet => _audioSRPSet;
-        public bool isAudioSRPSupport => (_audioSRPSet != null);
+        private List<AudioSRP> audioSet;
+        public bool isAudioSRPSupport => this.audioSet != null && this.audioSet.Count > 0;
 
         public enum AudioType
         {
@@ -32,11 +31,23 @@ namespace Hsinpa.Utility {
             }
         }
 
-        public void PlayAudio(AudioType audioType, string tag, string id) {
-            if (!isAudioSRPSupport) return;
+        public AudioClip GetAudioClip(string tag, string id)
+        {
 
-            var clip = AudioSRPSet.GetAudioClip(tag, id);
+            if (audioSet == null) return null;
+
+            var audioTag = audioSet.Find(x => x.tag == tag);
+
+            return audioTag.audioSets.Find(x => id == x.id).audioClip;
+        }
+
+        public AudioClip PlayAudio(AudioType audioType, string tag, string id) {
+            if (!isAudioSRPSupport) return null;
+
+            var clip = GetAudioClip(tag, id);
             PlayAudio(audioType, clip);
+
+            return clip;
         }
 
         public void PlayAudio(AudioType audioType, AudioClip audioClip) {

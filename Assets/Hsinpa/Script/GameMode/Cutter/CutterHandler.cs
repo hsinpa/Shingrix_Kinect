@@ -14,7 +14,7 @@ namespace Shingrix.Mode.Game
 
         Dictionary<int, BacteriaObject> m_trackerOccupyTable = new Dictionary<int, BacteriaObject>();
 
-        public System.Action<Vector3, Vector3> BacteriaCutEvent;
+        public System.Action<BacteriaObject.Type, Vector3, Vector3> BacteriaCutEvent;
 
         public CutterHandler(BacteriaSpawner bacteriaSpawner, ITracker tracker) {
             m_bacteriaSpawner = bacteriaSpawner;
@@ -77,7 +77,7 @@ namespace Shingrix.Mode.Game
 
                             m_bacteriaSpawner.EnqueueDeleteObject(bacteria);
 
-                            BacteriaCutEvent?.Invoke(bacteriaPosition, bacteriaScale);
+                            BacteriaCutEvent?.Invoke(bacteria.ObjectType, bacteriaPosition, bacteriaScale);
                         }
                     }
                 }

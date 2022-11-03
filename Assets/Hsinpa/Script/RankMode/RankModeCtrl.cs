@@ -1,4 +1,5 @@
 using Hsinpa;
+using Hsinpa.Utility;
 using Shingrix.Data;
 using Shingrix.UI;
 using System.Collections;
@@ -73,10 +74,13 @@ namespace Shingrix.Mode
                 _index = Mathf.Clamp(_index - step, 0, dataCount - 1);
                 _rankModelView.RankScrollView.ScrollToIndex(_index, 0.8f);
             }
+
+            UniversalAudioSolution.instance.PlayAudio(UniversalAudioSolution.AudioType.UI, ShingrixStatic.Audio.EffectTag, ShingrixStatic.Audio.EffectUI);
         }
 
         private void ConfirmAction(InputAction.CallbackContext inputAction)
         {
+            UniversalAudioSolution.instance.PlayAudio(UniversalAudioSolution.AudioType.UI, ShingrixStatic.Audio.EffectTag, ShingrixStatic.Audio.EffectUI);
             Hsinpa.Utility.SimpleEventSystem.Send(ShingrixStatic.Event.LoginModeEnter);
         }
     }

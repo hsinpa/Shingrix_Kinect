@@ -4,10 +4,13 @@ using UnityEngine;
 
 namespace Hsinpa.Utility
 {
-    public class AudioSRPSet : MonoBehaviour
+    [System.Serializable]
+    public struct AudioSRPSet
     {
         [SerializeField]
         private List<AudioSRP> audioSet;
+
+        public bool Is_Valid => this.audioSet != null && this.audioSet.Count > 0;
 
         public AudioClip GetAudioClip(string tag, string id) {
 

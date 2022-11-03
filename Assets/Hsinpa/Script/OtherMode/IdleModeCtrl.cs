@@ -1,4 +1,5 @@
 using Hsinpa;
+using Hsinpa.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,7 @@ namespace Shingrix.Mode
             m_videoPlayer = p_videoPlayer;
 
             m_idleInput.IdleMode.Awake.performed += (callabck) => {
+                UniversalAudioSolution.instance.PlayAudio(UniversalAudioSolution.AudioType.UI, ShingrixStatic.Audio.EffectTag, ShingrixStatic.Audio.EffectUI);
                 Hsinpa.Utility.SimpleEventSystem.Send(ShingrixStatic.Event.LoginModeEnter);
             };
         }

@@ -2,11 +2,11 @@ using Pooling;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Hsinpa.Utility;
 
 namespace Shingrix.Mode.Game {
     public class BacteriaSpawner
     {
-        private BacteriaObject m_bacteriaPrefab;
         private Transform m_container;
 
         private List<BacteriaObject> m_bateriaList = new List<BacteriaObject>();
@@ -17,18 +17,16 @@ namespace Shingrix.Mode.Game {
         private float m_bacMoveSpeed = 1;
         private int m_bacLength = 0;
         private float nextSpawnTime;
-        private ParticleSystem m_breakParticle;
 
         private Vector3 _cacheVector3 = new Vector3();
         private PoolManager m_poolManager;
 
-        public BacteriaSpawner(BacteriaObject bacteriaPrefab, ParticleSystem breakParticle, Transform container) {
-            this.m_bacteriaPrefab = bacteriaPrefab;
-            this.m_breakParticle = breakParticle;
+        public BacteriaSpawner(BacteriaObject bacteriaPrefab, BacteriaObject superPrefab, ParticleSystem breakParticle, Transform container) {
             this.m_container = container;
 
             this.m_poolManager = Pooling.PoolManager.instance;
             this.m_poolManager.CreatePool(bacteriaPrefab.gameObject, ShingrixStatic.Event.ObjPoolKeyBateria, ShingrixStatic.Bacteria.maxBacteriaSize);
+            this.m_poolManager.CreatePool(superPrefab.gameObject, ShingrixStatic.Event.ObjPoolKeySuper, ShingrixStatic.Bacteria.maxBacteriaSize);
             this.m_poolManager.CreatePool(breakParticle.gameObject, ShingrixStatic.Event.ObjPoolKeybreakParticle, ShingrixStatic.Bacteria.maxBacteriaSize);
         }
 
@@ -64,7 +62,12 @@ namespace Shingrix.Mode.Game {
 
         private void ProcessBacteriaSpawn() {
             if (nextSpawnTime < Time.time && m_bacLength < ShingrixStatic.Bacteria.maxBacteriaSize) {
-                GameObject spawnRawObject =  this.m_poolManager.ReuseObject(ShingrixStatic.Event.ObjPoolKeyBateria);
+
+                string object_key = UtilityFunc.PercentageGame(ShingrixStatic.GameMode.SuperRate) ? ShingrixStatic.Event.ObjPoolKeySuper : ShingrixStatic.Event.ObjPoolKeyBateria;
+
+                Debug.Log("Pecentage game  "+ object_key);
+
+                GameObject spawnRawObject =  this.m_poolManager.ReuseObject(object_key);
                 spawnRawObject.transform.SetParent(this.m_container);
                 spawnRawObject.transform.localScale = Vector3.one;
 

@@ -41,7 +41,8 @@ namespace Shingrix
         public class GameMode {
             public const int Time = 60;
             public const int WaitReadyTime = 3;
-            public const int WaitEndingTime = 3;
+            public const int WaitEndingTime = 5;
+            public const float SuperRate = 0.15f;
 
             public const int LoginBackToIdleTime = 20;
         }
@@ -56,6 +57,7 @@ namespace Shingrix
             public const string RankModeEnter = "event@rankmode_enter";
 
             public const string ObjPoolKeyBateria = "pool@bacteria";
+            public const string ObjPoolKeySuper = "pool@super";
             public const string ObjPoolKeybreakParticle = "pool@break_particle";
         }
 
@@ -66,6 +68,18 @@ namespace Shingrix
         public class IO {
             public const string GameSavePath = "game_saves.json";
             public const string KinectConfigPath = "kinect_config.json";
+        }
+
+        public class Audio {
+            public const string EffectTag = "audio@effect";
+            public const string EffectHit1 = "effect@hit_1";
+            public const string EffectHit2 = "effect@hit_2";
+            public const string EffectHit3 = "effect@hit_3";
+            public const string EffectHit = "effect@hit_{0}";
+            public const string EffectHitWrong = "effect@hit_wrong";
+
+            public const string EffectUI= "effect@ui_click";
+            public const string EffectEnd = "effect@end";
         }
 
         [System.Serializable]

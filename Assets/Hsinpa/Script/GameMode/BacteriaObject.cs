@@ -11,15 +11,16 @@ namespace Shingrix.Mode.Game
         public Collider Collider => this.m_collider;
 
         [SerializeField]
-        private ParticleSystem m_break_particle;
-
-        [SerializeField]
         private Renderer m_renderer;
 
         public Material cutMaterial;
 
         [SerializeField]
         private Material[] material_sets;
+
+        [SerializeField]
+        private Type type;
+        public Type ObjectType => type;
 
         private Vector3 contact_transform_position;
         private Vector3 contact_point;
@@ -29,6 +30,8 @@ namespace Shingrix.Mode.Game
                 return (diff + contact_point);
             }
         }
+
+        public enum Type { Bateria, Super}
 
         private int contact_index;
         public int Contact_Index => contact_index;

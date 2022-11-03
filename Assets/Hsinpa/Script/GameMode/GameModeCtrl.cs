@@ -15,6 +15,9 @@ namespace Shingrix.Mode
         private BacteriaObject m_bacteriaPrefab;
 
         [SerializeField]
+        private BacteriaObject m_superPrefab;
+
+        [SerializeField]
         private ParticleSystem m_particlePrefab;
 
         [SerializeField]
@@ -39,12 +42,12 @@ namespace Shingrix.Mode
 
             m_digitalTimer = new DigitalTimer();
             m_digitalTimer.SetTimeType(DigitalTimer.Type.Timer_CountDown);
-            m_bacteriaSpawner = new BacteriaSpawner(m_bacteriaPrefab, m_particlePrefab, this.transform);
+            m_bacteriaSpawner = new BacteriaSpawner(m_bacteriaPrefab, m_superPrefab, m_particlePrefab, this.transform);
 
             m_kinectTracker = new KinectTracker(m_customBodyView);
             m_mouseTracker = new MouseTracker(Camera.main);
 
-            m_cutter = new CutterHandler(m_bacteriaSpawner, m_kinectTracker);
+            m_cutter = new CutterHandler(m_bacteriaSpawner, m_mouseTracker);
             m_cutter.BacteriaCutEvent += OnBacteriaCutEvent;
         }
 
@@ -105,15 +108,18 @@ namespace Shingrix.Mode
             m_cutter.Dispose();
             m_gameModeView.ShowEndUI();
 
+            UniversalAudioSolution.instance.PlayAudio(UniversalAudioSolution.AudioType.UI, ShingrixStatic.Audio.EffectTag, ShingrixStatic.Audio.EffectEnd);
+
             _ = Hsinpa.Utility.UtilityFunc.DoDelayWork(ShingrixStatic.GameMode.WaitEndingTime, 
                 () => {
-                    if (this != null)
+                    if (this != null) {
                         SimpleEventSystem.Send(ShingrixStatic.Event.GameModeTimeup, m_rankStruct);
+                    }
                 });
         }
 
-        private void OnBacteriaCutEvent(Vector3 cutPosition, Vector3 cutScale) {
-            m_score_point++;
+        private void OnBacteriaCutEvent(BacteriaObject.Type type, Vector3 cutPosition, Vector3 cutScale) {
+            m_score_point += (type == BacteriaObject.Type.Bateria) ? 1 : -1;
             m_gameModeView?.SetScoreText(m_score_point);
             var paricleGamobject = Pooling.PoolManager.instance?.ReuseObject(ShingrixStatic.Event.ObjPoolKeybreakParticle);
 
@@ -132,6 +138,14 @@ namespace Shingrix.Mode
                 Pooling.PoolManager.instance?.Destroy(paricleGamobject);
             }
 
+            PlayBateriaCutSound(type == BacteriaObject.Type.Bateria);
+        }
+
+        private void PlayBateriaCutSound(bool positiveSound) {
+            int randomIndex = Random.Range(1, 4);
+            string success_id = string.Format(ShingrixStatic.Audio.EffectHit, randomIndex);
+            string audio_id = (positiveSound) ? success_id : ShingrixStatic.Audio.EffectHitWrong;
+            UniversalAudioSolution.instance.PlayAudio(UniversalAudioSolution.AudioType.UI, ShingrixStatic.Audio.EffectTag, audio_id);
         }
     }
 }

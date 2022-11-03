@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db35ab70d62745346994b3b107468b74, type: 3}
+  m_Name: AudioSRP
+  m_EditorClassIdentifier: 
+  tag: audio@effect
+  audioSets:
+  - id: effect@hit_1
+    audioClip: {fileID: 8300000, guid: 52f45abb269bdce4589c8cc7deb31cde, type: 3}
+  - id: effect@hit_2
+    audioClip: {fileID: 8300000, guid: 9be24af3430ddd5499c5080c0b422651, type: 3}
+  - id: effect@hit_3
+    audioClip: {fileID: 8300000, guid: 11ed9e93b5769c44f98d4b58f3538f59, type: 3}
+  - id: effect@hit_wrong
+    audioClip: {fileID: 8300000, guid: 7186bfa197346514b9dde1d62d32b5b5, type: 3}
+  - id: effect@ui_click
+    audioClip: {fileID: 8300000, guid: 058c3cb9fe45ef445b29c2a3a28947b3, type: 3}
+  - id: effect@end
+    audioClip: {fileID: 8300000, guid: 363ab75f42cbc0e4798c5b45bdacec36, type: 3}
