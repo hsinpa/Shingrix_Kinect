@@ -28,10 +28,11 @@ namespace Shingrix
             public static Vector3 upwardGeneralVelocity = new Vector3(0, 1, 0);
             public static Vector3 midGeneralVelocity = new Vector3(0, 0.1f, 1);
 
-            public const int maxBacteriaSize = 10;
-            public const float spawnTimeStep = 1.7f;
+            public const int maxBacteriaSize = 20;
+            public const float spawnTimeStepMax = 1.5f;
+            public const float spawnTimeStepMin = 0.3f;
 
-            public const float maxBateriaMoveSpeed = 1.05f;
+            public const float maxBateriaMoveSpeed = 1.55f;
             public const float minBateriaMoveSpeed = 0.9f;
 
             public const int maxBateriaRotateSpeed = 30;

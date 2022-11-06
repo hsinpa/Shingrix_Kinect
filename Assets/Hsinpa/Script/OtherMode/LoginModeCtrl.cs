@@ -150,6 +150,12 @@ namespace Shingrix.Mode
 
         private void AnyAction(InputAction.CallbackContext inputAction)
         {
+            if (m_hintButton == m_loginModeView.InputHint && !m_loginModeView.NameInputField.isFocused) {
+                m_loginModeView.NameInputField.ActivateInputField();
+                m_loginModeView.NameInputField.Select();
+                m_loginModeView.NameInputField.caretPosition = m_loginModeView.NameInputField.text.Length;
+            }
+
             UniversalAudioSolution.instance.PlayAudio(UniversalAudioSolution.AudioType.UI, ShingrixStatic.Audio.EffectTag, ShingrixStatic.Audio.EffectUI);
             m_delay_time += ShingrixStatic.GameMode.LoginBackToIdleTime;
         }
@@ -179,6 +185,7 @@ namespace Shingrix.Mode
             if (m_hintButton == m_loginModeView.InputHint) {
                 m_loginModeView.NameInputField.ActivateInputField();
                 m_loginModeView.NameInputField.Select();
+                //m_loginModeView.NameInputField.caretPosition = m_loginModeView.NameInputField.text.Length;
             }
             else
                 m_loginModeView.NameInputField.DeactivateInputField(clearSelection: true);

@@ -50,7 +50,7 @@ namespace Shingrix.Mode.Game {
             m_waitForDeletionPipe.Clear();
             m_bateriaList.Clear();
             m_bacLength = 0;
-            nextSpawnTime = Time.time + ShingrixStatic.Bacteria.spawnTimeStep;
+            nextSpawnTime = Time.time + ShingrixStatic.Bacteria.spawnTimeStepMax;
         }
 
         private void RemoveBateria(BacteriaObject deleteObject) {
@@ -65,8 +65,6 @@ namespace Shingrix.Mode.Game {
 
                 string object_key = UtilityFunc.PercentageGame(ShingrixStatic.GameMode.SuperRate) ? ShingrixStatic.Event.ObjPoolKeySuper : ShingrixStatic.Event.ObjPoolKeyBateria;
 
-                Debug.Log("Pecentage game  "+ object_key);
-
                 GameObject spawnRawObject =  this.m_poolManager.ReuseObject(object_key);
                 spawnRawObject.transform.SetParent(this.m_container);
                 spawnRawObject.transform.localScale = Vector3.one;
@@ -78,12 +76,15 @@ namespace Shingrix.Mode.Game {
 
                 spawnBateria.transform.position = new Vector3( 
                     Random.Range(ShingrixStatic.Bacteria.screenWidth.x, ShingrixStatic.Bacteria.screenWidth.y), 
-                    ShingrixStatic.Bacteria.spawnPosition, 
-                    0);
+                    ShingrixStatic.Bacteria.spawnPosition,
+                    Random.Range(-0.5f, 0.5f) //To show depth
+                );
 
                 m_bateriaList.Add(spawnBateria);
                 m_bacLength++;
-                nextSpawnTime = Time.time + ShingrixStatic.Bacteria.spawnTimeStep;
+
+                float spawnTime = Random.Range(ShingrixStatic.Bacteria.spawnTimeStepMin, ShingrixStatic.Bacteria.spawnTimeStepMax);
+                nextSpawnTime = Time.time + spawnTime;
             }
         }
 
