@@ -15,8 +15,8 @@ namespace Shingrix.Mode.Game
         
         }
 
-        public void Register(GameObject pieceA, GameObject pieceB, Vector3 normal, Vector3 tangent) {
-            piecePairs.Add(new PiecePair() {pieceA = pieceA, pieceB = pieceB, normal = normal, tangent = tangent });
+        public void Register(GameObject pieceA, GameObject pieceB, Vector3 normal, Vector3 tangent, bool has_rotate) {
+            piecePairs.Add(new PiecePair() {pieceA = pieceA, pieceB = pieceB, normal = normal, tangent = tangent, has_rotate = has_rotate });
         }
 
         public void Dispose()
@@ -43,15 +43,15 @@ namespace Shingrix.Mode.Game
 
                 var piecePair = piecePairs[i];
 
-                bool isAliveA = ProcessPiece(piecePair.pieceA, piecePair.normal, piecePair.tangent);
-                bool isAliveB = ProcessPiece(piecePair.pieceB, piecePair.normal * -1, piecePair.tangent);
+                bool isAliveA = ProcessPiece(piecePair.pieceA, piecePair.normal, piecePair.tangent, piecePair.has_rotate);
+                bool isAliveB = ProcessPiece(piecePair.pieceB, piecePair.normal * -1, piecePair.tangent, piecePair.has_rotate);
 
                 if (!isAliveA && !isAliveB)
                     piecePairs.RemoveAt(i);
             }
         }
 
-        private bool ProcessPiece(GameObject gameObject, Vector3 normal, Vector3 tangent)
+        private bool ProcessPiece(GameObject gameObject, Vector3 normal, Vector3 tangent, bool has_rotate)
         {
             if (gameObject == null) return false;
 
@@ -65,7 +65,8 @@ namespace Shingrix.Mode.Game
             }
 
             gameObject.transform.Translate(normal * Time.deltaTime * speedVelocity, relativeTo: Space.World);
-            gameObject.transform.Rotate(tangent, angularVelocity * Time.deltaTime);
+
+            if (has_rotate) gameObject.transform.Rotate(tangent, angularVelocity * Time.deltaTime);
 
             return true;
         }
@@ -75,6 +76,7 @@ namespace Shingrix.Mode.Game
             public GameObject pieceB;
             public Vector3 normal;
             public Vector3 tangent;
+            public bool has_rotate;
         }
 
     }

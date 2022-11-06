@@ -709,7 +709,7 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    Standalone: 
+    Standalone: READ_EXTERNAL_DATA
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}

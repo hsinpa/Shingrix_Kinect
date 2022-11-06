@@ -20,20 +20,21 @@ namespace Shingrix
             public static Vector2 constraintWidth = new Vector2(-3, 3); // Left / Right
 
             public const float spawnPosition = -7.5f;
-            public const float midPosition = 2.0f;
+            public const float midPosition = 3.5f;
             public const float cuttablePoint = -1.8f;
 
-            public static Vector2 vanishPositionYZ = new Vector2(2.8f, 0);
+            public static Vector2 vanishPositionYZ = new Vector2(3.95f, 0);
 
             public static Vector3 upwardGeneralVelocity = new Vector3(0, 1, 0);
             public static Vector3 midGeneralVelocity = new Vector3(0, 0.1f, 1);
 
-            public const int maxBacteriaSize = 20;
-            public const float spawnTimeStepMax = 1.5f;
-            public const float spawnTimeStepMin = 0.3f;
+            public const int maxBacteriaSize = 30;
+            public const float spawnTimeStepMax = 0.8f;
+            public const float spawnTimeStepMin = 0.2f;
+            public const int simutaneousSpawnCount = 2;
 
-            public const float maxBateriaMoveSpeed = 1.55f;
-            public const float minBateriaMoveSpeed = 0.9f;
+            public const float maxBateriaMoveSpeed = 3.0f;
+            public const float minBateriaMoveSpeed = 2.65f;
 
             public const int maxBateriaRotateSpeed = 30;
             public const int minBateriaRotateSpeed = 0;

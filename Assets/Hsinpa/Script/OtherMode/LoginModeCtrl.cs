@@ -132,6 +132,14 @@ namespace Shingrix.Mode
             if (m_page_index > 0) return;
 
             if (m_hintButton == m_loginModeView.PlayHint) {
+                bool IsValid = !string.IsNullOrEmpty(m_loginModeView.NameInputField.text);
+
+                if (!IsValid) {
+                    SetHintBtn(m_loginModeView.InputHint);
+                    m_loginModeView.InputHint.SetColor(Color.red);
+                    return;
+                }
+
                 m_page_index++;
                 m_loginModeView.EnablePage(m_page_index);
             }
@@ -144,6 +152,7 @@ namespace Shingrix.Mode
 
             if (m_hintButton == m_loginModeView.InputHint)
             {
+
                 ProcessNameField();
             }
         }
@@ -165,8 +174,8 @@ namespace Shingrix.Mode
 
             if (!IsValid) {
                 m_loginModeView.InputHint.SetColor(Color.red);
-                m_loginModeView.NameInputField.Select();
-                return false;
+                //m_loginModeView.NameInputField.Select();
+                //return false;
             }
 
             ShingrixStatic.Data.UserName = m_loginModeView.NameInputField.text;

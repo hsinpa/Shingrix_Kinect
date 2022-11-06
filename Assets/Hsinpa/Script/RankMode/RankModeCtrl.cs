@@ -62,18 +62,20 @@ namespace Shingrix.Mode
         private void DirectionAction(InputAction.CallbackContext inputAction)
         {
             int dataCount = m_rankModel.DataArray.Count;
-            int step = 3;
+            int step = 5;
 
-            if (inputAction.action == m_rankInput.LoginMode.Down) {
+            if (inputAction.action == m_rankInput.LoginMode.Down) 
+            {
                 _index = Mathf.Clamp(_index + step, 0, dataCount -1);
-                _rankModelView.RankScrollView.ScrollToIndex(_index, 0.2f);
+                _rankModelView.RankScrollView.ScrollToIndex(_index+1,0);
             }
 
             if (inputAction.action == m_rankInput.LoginMode.Up)
             {
                 _index = Mathf.Clamp(_index - step, 0, dataCount - 1);
-                _rankModelView.RankScrollView.ScrollToIndex(_index, 0.8f);
+                _rankModelView.RankScrollView.ScrollToIndex(_index-1, 1);
             }
+            Debug.Log("_index "+ _index);
 
             UniversalAudioSolution.instance.PlayAudio(UniversalAudioSolution.AudioType.UI, ShingrixStatic.Audio.EffectTag, ShingrixStatic.Audio.EffectUI);
         }

@@ -3,8 +3,9 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -13,15 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   profile: {fileID: 0}
   active: 1
+  ignoreVisibility: 0
   ignoreFrames: 3
-  duration: 3
+  duration: 0.55
   continuous: 0
-  smooth: 0
+  smooth: 1
   checkWorldPosition: 0
   minDistance: 0.5
+  worldPositionRelativeOption: 0
+  worldPositionRelativeTransform: {fileID: 0}
   checkScreenPosition: 1
-  minPixelDistance: 5
-  maxStepsPerFrame: 20
+  minPixelDistance: 2
+  maxStepsPerFrame: 18
   checkTime: 0
   timeInterval: 1
   checkCollisions: 0
@@ -32,6 +36,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   drawBehind: 1
+  subMeshMask: -1
+  cullMode: 2
   colorOverTime:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -61,9 +67,13 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  colorRamp: 0
+  colorRampTexture: {fileID: 0}
+  fadeOut: 1
   colorSequence: 0
-  color: {r: 1, g: 1, b: 1, a: 1}
+  color: {r: 0.9528302, g: 0.9528302, b: 0.9528302, a: 1}
   colorCycleDuration: 3
+  colorCycleLoop: 1
   pingPongSpeed: 1
   colorStartPalette:
     serializedVersion: 2
@@ -97,24 +107,49 @@ MonoBehaviour:
   cam: {fileID: 0}
   effect: 0
   texture: {fileID: 2800000, guid: 149c9fc2e4e4f45d9a2e1f3bb0ff9282, type: 3}
-  scale: {x: 1, y: 1, z: 1}
+  scale: {x: 0.4, y: 0.4, z: 0.4}
   scaleStartRandomMin: {x: 1, y: 1, z: 1}
   scaleStartRandomMax: {x: 1, y: 1, z: 1}
+  ignoreTransformScale: 0
   scaleOverTime:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
+    - serializedVersion: 3
+      time: -0.029167175
+      value: 0.9524994
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 1
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.34674555
+      value: 1.0082731
+      inSlope: 0.069124825
+      outSlope: 0.069124825
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7648587
+      value: 1.0080659
+      inSlope: -0.10617883
+      outSlope: -0.10617883
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.1041565
+      value: 0.94999695
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -124,10 +159,16 @@ MonoBehaviour:
   laserBandWidth: 0.1
   laserIntensity: 20
   laserFlash: 0.2
+  trailTint: {r: 0, g: 0, b: 0.1, a: 1}
+  cameraDistanceFade: 0
+  cameraDistanceFadeNear: 0
+  cameraDistanceFadeFar: 1000
   lookTarget: {fileID: 0}
   lookToCamera: 1
   textureCutOff: 0.5
   normalThreshold: 0.3
   useLastAnimationState: 0
   maxBatches: 50
+  meshPoolSize: 256
   animationStates: 
+  interpolate: 0

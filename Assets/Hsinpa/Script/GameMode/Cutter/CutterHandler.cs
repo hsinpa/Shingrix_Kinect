@@ -65,15 +65,16 @@ namespace Shingrix.Mode.Game
                         var bacteriaScale = bacteria.transform.localScale;
                         var cutDirection = bacteria.GetVector(tracker.bounds.center);
                         var plane = Vector3.Cross(cutDirection, Vector3.forward);
-                        var cutCenter = Vector3.Lerp(bacteria.Contact_Point, tracker.bounds.center, 0.5f);
-                        cutCenter = bacteria.Collider.bounds.ClosestPoint(cutCenter);
+                        //var cutCenter = Vector3.Lerp(bacteria.Contact_Point, tracker.bounds.center, 0.5f);
+                        //cutCenter = bacteria.Collider.bounds.ClosestPoint(cutCenter);
+                        var cutCenter = bacteria.transform.position;
 
                         GameObject[] cutPieces = bacteria.gameObject.SliceInstantiate(cutCenter, plane, bacteria.cutMaterial);
 
                         if (cutPieces != null && cutPieces.Length == 2) {
                             m_trackerOccupyTable.Remove(tracker.index);
 
-                            m_cutPieceProcessor.Register(cutPieces[0], cutPieces[1], plane, cutDirection);
+                            m_cutPieceProcessor.Register(cutPieces[0], cutPieces[1], plane, cutDirection, bacteria.ObjectType == BacteriaObject.Type.Bateria);
 
                             m_bacteriaSpawner.EnqueueDeleteObject(bacteria);
 

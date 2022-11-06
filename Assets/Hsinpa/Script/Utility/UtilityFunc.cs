@@ -300,7 +300,7 @@ namespace Hsinpa.Utility
 			return dict;
 		}
 
-		public static Dictionary<string, List<T>> SetListDictionary<T>(Dictionary<string, List<T>> dict, string id, T dataStruct)
+		public static Dictionary<K, List<T>> SetListDictionary<T, K>(Dictionary<K, List<T>> dict, K id, T dataStruct)
 		{
 			if (dict.ContainsKey(id))
 			{

@@ -46,7 +46,7 @@ namespace Shingrix.UI
         public async void ScrollToIndex(int p_index, float p_alignment) {
             await Task.Yield();
 
-            ScrollTo(p_index, 0.1f, alignment: p_alignment);        
+            JumpTo(p_index, alignment: p_alignment);        
         } 
 
         public void Dispose()

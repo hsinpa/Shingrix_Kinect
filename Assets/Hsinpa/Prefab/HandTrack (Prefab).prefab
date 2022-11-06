@@ -103,7 +103,7 @@ MonoBehaviour:
   ignoreVisibility: 0
   executeInEditMode: 0
   ignoreFrames: 3
-  duration: 0.55
+  duration: 0.2
   continuous: 0
   smooth: 1
   checkWorldPosition: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   colorRampEnd: {fileID: 0}
   fadeOut: 1
   colorSequence: 0
-  color: {r: 1, g: 0.7202183, b: 0.4292453, a: 1}
+  color: {r: 1, g: 0.8816268, b: 0.79607844, a: 1}
   colorCycleDuration: 3
   colorCycleLoop: 1
   pingPongSpeed: 1
@@ -197,7 +197,7 @@ MonoBehaviour:
   cam: {fileID: 0}
   effect: 0
   texture: {fileID: 2800000, guid: 149c9fc2e4e4f45d9a2e1f3bb0ff9282, type: 3}
-  scale: {x: 0.4, y: 0.4, z: 0.4}
+  scale: {x: 0.3, y: 0.3, z: 0.3}
   scaleStartRandomMin: {x: 1, y: 1, z: 1}
   scaleStartRandomMax: {x: 1, y: 1, z: 1}
   scaleOverTime:
@@ -213,8 +213,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.34674555
-      value: 1.0082731
+      time: 0.294797
+      value: 0.9582701
       inSlope: 0.069124825
       outSlope: 0.069124825
       tangentMode: 0
@@ -222,10 +222,19 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.7648587
-      value: 1.0080659
+      time: 0.51458406
+      value: 1.0199373
       inSlope: -0.10617883
       outSlope: -0.10617883
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6884964
+      value: 0.9736984
+      inSlope: -0.23266904
+      outSlope: -0.23266904
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334

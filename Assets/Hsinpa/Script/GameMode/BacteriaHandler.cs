@@ -20,6 +20,7 @@ namespace Shingrix.Mode.Game {
 
         private Vector3 _cacheVector3 = new Vector3();
         private PoolManager m_poolManager;
+        private float _lastSpawnPosition;
 
         public BacteriaSpawner(BacteriaObject bacteriaPrefab, BacteriaObject superPrefab, ParticleSystem breakParticle, Transform container) {
             this.m_container = container;
@@ -28,6 +29,7 @@ namespace Shingrix.Mode.Game {
             this.m_poolManager.CreatePool(bacteriaPrefab.gameObject, ShingrixStatic.Event.ObjPoolKeyBateria, ShingrixStatic.Bacteria.maxBacteriaSize);
             this.m_poolManager.CreatePool(superPrefab.gameObject, ShingrixStatic.Event.ObjPoolKeySuper, ShingrixStatic.Bacteria.maxBacteriaSize);
             this.m_poolManager.CreatePool(breakParticle.gameObject, ShingrixStatic.Event.ObjPoolKeybreakParticle, ShingrixStatic.Bacteria.maxBacteriaSize);
+            _lastSpawnPosition = float.PositiveInfinity;
         }
 
         public void OnUpdate() {
@@ -51,6 +53,7 @@ namespace Shingrix.Mode.Game {
             m_bateriaList.Clear();
             m_bacLength = 0;
             nextSpawnTime = Time.time + ShingrixStatic.Bacteria.spawnTimeStepMax;
+            _lastSpawnPosition = float.PositiveInfinity;
         }
 
         private void RemoveBateria(BacteriaObject deleteObject) {
@@ -74,8 +77,18 @@ namespace Shingrix.Mode.Game {
                 spawnBateria.SetUp(ShingrixStatic.Bacteria.maxBateriaMoveSpeed, ShingrixStatic.Bacteria.minBateriaMoveSpeed, 
                                     ShingrixStatic.Bacteria.maxBateriaRotateSpeed, ShingrixStatic.Bacteria.minBateriaRotateSpeed);
 
-                spawnBateria.transform.position = new Vector3( 
-                    Random.Range(ShingrixStatic.Bacteria.screenWidth.x, ShingrixStatic.Bacteria.screenWidth.y), 
+                float spawnPositionX =  Random.Range(ShingrixStatic.Bacteria.screenWidth.x, ShingrixStatic.Bacteria.screenWidth.y);
+
+                float stepSize = 0.6f;
+                while (Mathf.Abs(_lastSpawnPosition - spawnPositionX) < stepSize)
+                {
+                    spawnPositionX = Random.Range(ShingrixStatic.Bacteria.screenWidth.x, ShingrixStatic.Bacteria.screenWidth.y);
+                }
+
+                _lastSpawnPosition = spawnPositionX;
+
+                spawnBateria.transform.position = new Vector3(
+                    spawnPositionX, 
                     ShingrixStatic.Bacteria.spawnPosition,
                     Random.Range(-0.5f, 0.5f) //To show depth
                 );
@@ -103,11 +116,11 @@ namespace Shingrix.Mode.Game {
                 // Passing mid point, move backward
                 if (worldPosition.y > ShingrixStatic.Bacteria.midPosition)
                 {
-                    bacteriaObj.transform.localScale = bacteriaObj.transform.localScale * 0.999f;
+                    bacteriaObj.transform.localScale = bacteriaObj.transform.localScale * 0.99f;
 
                     Vector3 next_position = bacteriaObj.transform.position;
                     next_position = next_position + (ShingrixStatic.Bacteria.midGeneralVelocity * Time.deltaTime * bacteriaObj.MoveSpeed);
-                    next_position.x = Mathf.Lerp(next_position.x, 0, 0.0005f);
+                    next_position.x = Mathf.Lerp(next_position.x, 0, 0.0055f);
 
                     bacteriaObj.transform.position = next_position;
                 }
