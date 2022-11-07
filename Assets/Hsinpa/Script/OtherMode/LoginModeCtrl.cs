@@ -140,6 +140,8 @@ namespace Shingrix.Mode
                     return;
                 }
 
+                ShingrixStatic.Data.UserName = m_loginModeView.NameInputField.text;
+
                 m_page_index++;
                 m_loginModeView.EnablePage(m_page_index);
             }
@@ -147,12 +149,13 @@ namespace Shingrix.Mode
             if (m_hintButton == m_loginModeView.RankHint)
             {
                 Debug.Log("Go to Rank Mode");
+
+                ShingrixStatic.Data.UserName = m_loginModeView.NameInputField.text;
                 Hsinpa.Utility.SimpleEventSystem.Send(ShingrixStatic.Event.RankModeEnter);
             }
 
             if (m_hintButton == m_loginModeView.InputHint)
             {
-
                 ProcessNameField();
             }
         }
@@ -172,13 +175,8 @@ namespace Shingrix.Mode
         private bool ProcessNameField() {
             bool IsValid = !string.IsNullOrEmpty(m_loginModeView.NameInputField.text);
 
-            if (!IsValid) {
-                m_loginModeView.InputHint.SetColor(Color.red);
-                //m_loginModeView.NameInputField.Select();
-                //return false;
-            }
+            if (m_loginModeView.NameInputField.isFocused) return false;
 
-            ShingrixStatic.Data.UserName = m_loginModeView.NameInputField.text;
             m_loginModeView.InputHint.SetColor(m_loginModeView.InputHint.OriginalColor);
             SetHintBtn(m_loginModeView.PlayHint);
             return true;

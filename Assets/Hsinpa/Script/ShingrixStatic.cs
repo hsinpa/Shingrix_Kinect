@@ -12,6 +12,9 @@ namespace Shingrix
             public float kinect_pos_offset_y;
             public float kinect_pos_offset_z;
             public float kinect_scale;
+
+            public float kinect_depth_min;
+            public float kinect_depth_max;
         }
 
         public class Bacteria {
@@ -28,6 +31,7 @@ namespace Shingrix
             public static Vector3 upwardGeneralVelocity = new Vector3(0, 1, 0);
             public static Vector3 midGeneralVelocity = new Vector3(0, 0.1f, 1);
 
+            public const int maxParticleSize = 10;
             public const int maxBacteriaSize = 30;
             public const float spawnTimeStepMax = 0.8f;
             public const float spawnTimeStepMin = 0.2f;
@@ -61,6 +65,8 @@ namespace Shingrix
             public const string ObjPoolKeyBateria = "pool@bacteria";
             public const string ObjPoolKeySuper = "pool@super";
             public const string ObjPoolKeybreakParticle = "pool@break_particle";
+            public const string ObjPoolKeySlashParticle = "pool@slash_particle";
+
         }
 
         public class Data {

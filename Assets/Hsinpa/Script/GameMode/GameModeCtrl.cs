@@ -6,6 +6,7 @@ using Shingrix.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 namespace Shingrix.Mode
 {
@@ -18,7 +19,10 @@ namespace Shingrix.Mode
         private BacteriaObject m_superPrefab;
 
         [SerializeField]
-        private ParticleSystem m_particlePrefab;
+        private ParticleSystem m_breakParticlePrefab;
+
+        [SerializeField]
+        private VisualEffect m_slashParticlePrefab;
 
         [SerializeField]
         private CustomBodyView m_customBodyView;
@@ -39,15 +43,14 @@ namespace Shingrix.Mode
         public void SetUp(GameModeView gameModeView, RankModel rankModel) {
             m_gameModeView = gameModeView;
             m_rankModel = rankModel;
-
             m_digitalTimer = new DigitalTimer();
             m_digitalTimer.SetTimeType(DigitalTimer.Type.Timer_CountDown);
-            m_bacteriaSpawner = new BacteriaSpawner(m_bacteriaPrefab, m_superPrefab, m_particlePrefab, this.transform);
+            m_bacteriaSpawner = new BacteriaSpawner(m_bacteriaPrefab, m_superPrefab, m_breakParticlePrefab, m_slashParticlePrefab, this.transform);
 
             m_kinectTracker = new KinectTracker(m_customBodyView);
             m_mouseTracker = new MouseTracker(Camera.main);
 
-            m_cutter = new CutterHandler(m_bacteriaSpawner, m_mouseTracker);
+            m_cutter = new CutterHandler(m_bacteriaSpawner, m_kinectTracker);
             m_cutter.BacteriaCutEvent += OnBacteriaCutEvent;
         }
 
@@ -118,24 +121,37 @@ namespace Shingrix.Mode
                 });
         }
 
-        private void OnBacteriaCutEvent(BacteriaObject.Type type, Vector3 cutPosition, Vector3 cutScale) {
+        private void OnBacteriaCutEvent(BacteriaObject.Type type, Vector3 cutPosition, Vector3 cutScale, Vector3 normal) {
             m_score_point += (type == BacteriaObject.Type.Bateria) ? 1 : -1;
             m_gameModeView?.SetScoreText(m_score_point);
-            var paricleGamobject = Pooling.PoolManager.instance?.ReuseObject(ShingrixStatic.Event.ObjPoolKeybreakParticle);
+            var breakParicleGamobject = Pooling.PoolManager.instance?.ReuseObject(ShingrixStatic.Event.ObjPoolKeybreakParticle);
+            var slashParicleGamobject = Pooling.PoolManager.instance?.ReuseObject(ShingrixStatic.Event.ObjPoolKeySlashParticle);
 
             try
             {
-                var breakParticle = paricleGamobject.GetComponent<ParticleSystem>();
+                var breakParticle = breakParicleGamobject.GetComponent<ParticleSystem>();
                 breakParticle.transform.position = cutPosition;
                 breakParticle.transform.localScale = cutScale;
                 breakParticle.Play();
 
+                var slashParticle = slashParicleGamobject.GetComponent<VisualEffect>();
+
+                slashParicleGamobject.transform.position = cutPosition;
+                normal.z = 0;
+                slashParicleGamobject.transform.rotation = Quaternion.FromToRotation(slashParicleGamobject.transform.right, normal) * slashParicleGamobject.transform.rotation;
+                slashParticle.enabled = true;
+                slashParticle.playRate = 3;
+                slashParticle.Play();
+
                 _ = Hsinpa.Utility.UtilityFunc.DoDelayWork(1, () => {
-                    Pooling.PoolManager.instance?.Destroy(paricleGamobject);
+                    slashParticle.enabled = false;
+
+                    Pooling.PoolManager.instance?.Destroy(breakParicleGamobject);
+                    Pooling.PoolManager.instance?.Destroy(slashParicleGamobject);
                 });
             }
             catch {
-                Pooling.PoolManager.instance?.Destroy(paricleGamobject);
+                Pooling.PoolManager.instance?.Destroy(breakParicleGamobject);
             }
 
             PlayBateriaCutSound(type == BacteriaObject.Type.Bateria);

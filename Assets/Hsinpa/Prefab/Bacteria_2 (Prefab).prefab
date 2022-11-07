@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8936798441019446949}
-  m_Mesh: {fileID: 3517872391245068507, guid: 7981f9f56b3e1a448936deb9f82c8899, type: 3}
+  m_Mesh: {fileID: -7877458002264597508, guid: 7482de4edc8267a48a5b18e948f0d70b, type: 3}
 --- !u!23 &7423373255019673456
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d492509f6a5b33f48b2e67b45c7709b2, type: 2}
+  - {fileID: 2100000, guid: bd5d4a1eb50e62d47bcf5ee6edf83970, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,8 +96,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.6
-  m_Center: {x: -0.0000000018626451, y: 0, z: 0}
+  m_Radius: 0.58
+  m_Center: {x: -0.00004118681, y: -0.00012481213, z: 0.000010788441}
 --- !u!114 &-4749144619802586745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_renderer: {fileID: 7423373255019673456}
   cutMaterial: {fileID: 2100000, guid: 3fe1ff3541d3bb3468502e8ebd4fa8f0, type: 2}
   material_sets:
-  - {fileID: 2100000, guid: d492509f6a5b33f48b2e67b45c7709b2, type: 2}
-  - {fileID: 2100000, guid: d43ec745c7a0d874f8cb8047d86259f6, type: 2}
-  - {fileID: 2100000, guid: ba2b3b2660567324583150c0a89fc6a4, type: 2}
+  - {fileID: 2100000, guid: bd5d4a1eb50e62d47bcf5ee6edf83970, type: 2}
+  - {fileID: 2100000, guid: a8a3a59c8b48037439563033c813c307, type: 2}
+  - {fileID: 2100000, guid: 74a7c64e4df6a994083db90e3cc01162, type: 2}
   type: 0

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Hsinpa.Utility;
+using UnityEngine.VFX;
 
 namespace Shingrix.Mode.Game {
     public class BacteriaSpawner
@@ -22,13 +23,15 @@ namespace Shingrix.Mode.Game {
         private PoolManager m_poolManager;
         private float _lastSpawnPosition;
 
-        public BacteriaSpawner(BacteriaObject bacteriaPrefab, BacteriaObject superPrefab, ParticleSystem breakParticle, Transform container) {
+        public BacteriaSpawner(BacteriaObject bacteriaPrefab, BacteriaObject superPrefab, ParticleSystem breakParticle, VisualEffect slashParticle, Transform container) {
             this.m_container = container;
 
             this.m_poolManager = Pooling.PoolManager.instance;
             this.m_poolManager.CreatePool(bacteriaPrefab.gameObject, ShingrixStatic.Event.ObjPoolKeyBateria, ShingrixStatic.Bacteria.maxBacteriaSize);
             this.m_poolManager.CreatePool(superPrefab.gameObject, ShingrixStatic.Event.ObjPoolKeySuper, ShingrixStatic.Bacteria.maxBacteriaSize);
-            this.m_poolManager.CreatePool(breakParticle.gameObject, ShingrixStatic.Event.ObjPoolKeybreakParticle, ShingrixStatic.Bacteria.maxBacteriaSize);
+            this.m_poolManager.CreatePool(breakParticle.gameObject, ShingrixStatic.Event.ObjPoolKeybreakParticle, ShingrixStatic.Bacteria.maxParticleSize);
+            this.m_poolManager.CreatePool(slashParticle.gameObject, ShingrixStatic.Event.ObjPoolKeySlashParticle, ShingrixStatic.Bacteria.maxParticleSize);
+
             _lastSpawnPosition = float.PositiveInfinity;
         }
 
@@ -79,7 +82,7 @@ namespace Shingrix.Mode.Game {
 
                 float spawnPositionX =  Random.Range(ShingrixStatic.Bacteria.screenWidth.x, ShingrixStatic.Bacteria.screenWidth.y);
 
-                float stepSize = 0.6f;
+                float stepSize = 0.8f;
                 while (Mathf.Abs(_lastSpawnPosition - spawnPositionX) < stepSize)
                 {
                     spawnPositionX = Random.Range(ShingrixStatic.Bacteria.screenWidth.x, ShingrixStatic.Bacteria.screenWidth.y);

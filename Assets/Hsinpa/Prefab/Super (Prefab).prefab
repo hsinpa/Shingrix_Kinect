@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 438012009182675766}
-  m_Mesh: {fileID: 4805911171534758207, guid: 3a2ed2ed3042bc34aaeab2def58eb631, type: 3}
+  m_Mesh: {fileID: 4805911171534758207, guid: 68b8917e7b8cf8f4dae3741b5ea66c71, type: 3}
 --- !u!23 &2095543724533605091
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2be15baaaa1a8154eb3874eb48dd3473, type: 2}
+  - {fileID: 2100000, guid: e01e7f463d957264b9519d9a8ece01bf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,8 +96,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.259925, y: 1.1134949, z: 0.005502779}
-  m_Center: {x: 0.0028566718, y: -0.040303707, z: 0.002751389}
+  m_Size: {x: 0.9540049, y: 0.86314404, z: 0.38270095}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3462837891806999723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,5 +114,5 @@ MonoBehaviour:
   m_renderer: {fileID: 2095543724533605091}
   cutMaterial: {fileID: 2100000, guid: 3fe1ff3541d3bb3468502e8ebd4fa8f0, type: 2}
   material_sets:
-  - {fileID: 2100000, guid: 2be15baaaa1a8154eb3874eb48dd3473, type: 2}
+  - {fileID: 2100000, guid: e01e7f463d957264b9519d9a8ece01bf, type: 2}
   type: 1

@@ -2676,14 +2676,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.251221, y: -0.110856734, z: 0.029033048, w: 0.9611222}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 29.298, y: -13.157, z: 0.007}
 --- !u!114 &705507996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4197,8 +4197,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d56c456c84332fa4e8628ad5f676e4c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: 0.5
-  position_offset: {x: 0, y: 3, z: 0}
   handTrackPrefab: {fileID: 8577057428872245029, guid: 98ae61f813120e44889793895d8bf543, type: 3}
   BodySourceManager: {fileID: 255535844}
   mJointMat: {fileID: 2100000, guid: f2ea145c63353784985576f08398a815, type: 2}
@@ -7305,7 +7303,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_bacteriaPrefab: {fileID: -4749144619802586745, guid: 17bf9872074baf34e90035edf245b55b, type: 3}
   m_superPrefab: {fileID: 3462837891806999723, guid: cd463b12db74c134eb27049487e1a7b5, type: 3}
-  m_particlePrefab: {fileID: 6919635051432526074, guid: 4d5f55b17fa268d4094f99e1571670d0, type: 3}
+  m_breakParticlePrefab: {fileID: 6919635051432526074, guid: 4d5f55b17fa268d4094f99e1571670d0, type: 3}
+  m_slashParticlePrefab: {fileID: 3758043358688583664, guid: 606b4ec4efb874e4fbd1f27c16926629, type: 3}
   m_customBodyView: {fileID: 1309844295}
 --- !u!1 &2003585693
 GameObject:

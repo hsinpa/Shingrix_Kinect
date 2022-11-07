@@ -2,5 +2,8 @@
     "kinect_pos_offset_x": 0,
 	"kinect_pos_offset_y" : 3,
 	"kinect_pos_offset_z": 0,
-	"kinect_scale" : 0.5
+	"kinect_scale" : 0.5,
+
+	"kinect_depth_min" : 5,
+	"kinect_depth_max" : 14
 }

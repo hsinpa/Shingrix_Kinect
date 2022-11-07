@@ -10,12 +10,6 @@ namespace Hsinpa.KinectWrap {
     public class CustomBodyView : MonoBehaviour
     {
         [SerializeField]
-        private float scale;
-
-        [SerializeField]
-        private Vector3 position_offset;
-
-        [SerializeField]
         private GameObject handTrackPrefab;
 
         public BodySourceManager BodySourceManager;
@@ -24,6 +18,8 @@ namespace Hsinpa.KinectWrap {
         private Dictionary<ulong, GameObject> _Bodies = new Dictionary<ulong, GameObject>();
         private Dictionary<uint, TrackerStruct> _TrackTable = new Dictionary<uint, TrackerStruct>();
         private ShingrixStatic.ShingrixKineticData _kineticData;
+        private Vector3 _kineticDataPosition;
+        private Vector3 _failHandPosition = new Vector3(1000, -1000, 0);
 
         public List<TrackerStruct> _trackerStructs = new List<TrackerStruct>();
 
@@ -49,18 +45,22 @@ namespace Hsinpa.KinectWrap {
 
         private void Start()
         {
-            _kineticData = new ShingrixStatic.ShingrixKineticData() {
-                kinect_pos_offset_x = position_offset.x, kinect_pos_offset_y = position_offset.y, kinect_pos_offset_z = position_offset.z,
-                kinect_scale = scale
+            _kineticData = new ShingrixStatic.ShingrixKineticData()
+            {
+                kinect_pos_offset_x = 0,
+                kinect_pos_offset_y = 0,
+                kinect_pos_offset_z = 0,
+                kinect_scale = 0.5f,
+                kinect_depth_min = 5, kinect_depth_max = 13
             };
 
-#if READ_EXTERNAL_DATA
             string rawData = Hsinpa.Utility.IOUtility.GetFileText(Path.Combine(Application.streamingAssetsPath, ShingrixStatic.IO.KinectConfigPath));
             if (!string.IsNullOrEmpty(rawData))
                 _kineticData = JsonUtility.FromJson<ShingrixStatic.ShingrixKineticData>(rawData);
 
+            _kineticDataPosition = new Vector3(_kineticData.kinect_pos_offset_x, _kineticData.kinect_pos_offset_y, _kineticData.kinect_pos_offset_z);
+
             Debug.Log($"_kineticData pos {_kineticData.kinect_pos_offset_x} {_kineticData.kinect_pos_offset_y} {_kineticData.kinect_pos_offset_z}, scale {_kineticData.kinect_scale}");
-#endif
         }
 
         void Update()
@@ -94,6 +94,7 @@ namespace Hsinpa.KinectWrap {
                 {
                     Destroy(_Bodies[trackingId]);
                     _Bodies.Remove(trackingId);
+                    _TrackTable.Remove((uint)trackingId);
                 }
             }
 
@@ -103,7 +104,6 @@ namespace Hsinpa.KinectWrap {
                 {
                     continue;
                 }
-
                 if (body.IsTracked)
                 {
                     if (!_Bodies.ContainsKey(body.TrackingId))
@@ -154,14 +154,20 @@ namespace Hsinpa.KinectWrap {
                 Kinect.Joint sourceJoint = body.Joints[jt];
 
                 Transform jointObj = bodyObject.transform.Find(jt.ToString());
+                MeshRenderer meshRender = jointObj.GetComponent<MeshRenderer>();
                 jointObj.localPosition = GetVector3FromJoint(sourceJoint);
 
-                jointObj.localPosition = jointObj.localPosition * scale;
-                jointObj.localPosition = jointObj.localPosition + position_offset;
+                jointObj.localPosition = jointObj.localPosition * _kineticData.kinect_scale;
+                jointObj.localPosition = jointObj.localPosition + _kineticDataPosition;
+                float depth = jointObj.localPosition.z;
 
                 if (_TrackTable.TryGetValue(part_id, out var trackerStruct)) {
-                    var jointPosition = jointObj.localPosition;
+                    bool is_depth_valid = depth < _kineticData.kinect_depth_max && depth > _kineticData.kinect_depth_min;
+                    var jointPosition = (is_depth_valid) ? jointObj.localPosition : _failHandPosition;
                     jointPosition.z = 0;
+
+                    meshRender.enabled = (is_depth_valid);
+                    
                     trackerStruct.UpdatePosition(jointPosition);
 
                     _TrackTable[part_id] = trackerStruct;
