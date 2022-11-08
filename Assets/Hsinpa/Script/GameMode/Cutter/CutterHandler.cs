@@ -51,7 +51,7 @@ namespace Shingrix.Mode.Game
                     var bacteriaBound = bacteria.Collider.bounds;
                     bacteriaBound.center = new Vector3(bacteriaBound.center.x, bacteriaBound.center.y, 0);
 
-                    bool isCutted = !bacteriaBound.Intersects(tracker.bounds) || Vector3.Distance(bacteria.Contact_Point, tracker.bounds.center) > bacteriaBound.size.x;
+                    bool isCutted = !bacteriaBound.Intersects(tracker.bounds) || Vector3.Distance(bacteria.Contact_Point, tracker.bounds.center) > (bacteriaBound.extents.x);
 
                     if (isCutted)
                     {

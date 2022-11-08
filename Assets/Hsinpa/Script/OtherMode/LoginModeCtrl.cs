@@ -4,6 +4,7 @@ using Shingrix.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -162,23 +163,29 @@ namespace Shingrix.Mode
 
         private void AnyAction(InputAction.CallbackContext inputAction)
         {
-            if (m_hintButton == m_loginModeView.InputHint && !m_loginModeView.NameInputField.isFocused) {
+            m_delay_time += ShingrixStatic.GameMode.LoginBackToIdleTime;
+
+            if (m_hintButton != m_loginModeView.InputHint) return;
+
+            if (!m_loginModeView.NameInputField.isFocused) {
                 m_loginModeView.NameInputField.ActivateInputField();
                 m_loginModeView.NameInputField.Select();
                 m_loginModeView.NameInputField.caretPosition = m_loginModeView.NameInputField.text.Length;
             }
 
             UniversalAudioSolution.instance.PlayAudio(UniversalAudioSolution.AudioType.UI, ShingrixStatic.Audio.EffectTag, ShingrixStatic.Audio.EffectUI);
-            m_delay_time += ShingrixStatic.GameMode.LoginBackToIdleTime;
         }
         #endregion
-        private bool ProcessNameField() {
+        private async Task<bool> ProcessNameField() {
             bool IsValid = !string.IsNullOrEmpty(m_loginModeView.NameInputField.text);
+
+            await Task.Delay(100);
 
             if (m_loginModeView.NameInputField.isFocused) return false;
 
             m_loginModeView.InputHint.SetColor(m_loginModeView.InputHint.OriginalColor);
             SetHintBtn(m_loginModeView.PlayHint);
+
             return true;
         }
 
