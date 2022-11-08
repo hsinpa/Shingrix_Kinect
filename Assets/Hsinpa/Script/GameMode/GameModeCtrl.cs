@@ -38,7 +38,9 @@ namespace Shingrix.Mode
         
         private int m_score_point;
         private RankModel m_rankModel;
+        private bool m_countdown_flag = false;
         ShingrixStatic.RankStruct m_rankStruct;
+
 
         public void SetUp(GameModeView gameModeView, RankModel rankModel) {
             m_gameModeView = gameModeView;
@@ -57,6 +59,7 @@ namespace Shingrix.Mode
         public void Enter()
         {
             m_score_point = 0;
+            m_countdown_flag = false;
             m_digitalTimer.ResetTimer();
 
             m_gameModeView?.SetNameText(ShingrixStatic.Data.UserName);
@@ -100,7 +103,14 @@ namespace Shingrix.Mode
             int time_leave = m_digitalTimer.GetSecond();
             m_gameModeView.SetTimerText(time_leave);
 
-            if (m_digitalTimer.GetSecond() <= 0) {
+            int timeLeave = m_digitalTimer.GetSecond();
+
+            if (timeLeave <= 3 && !m_countdown_flag) {
+                m_countdown_flag = true;
+                UniversalAudioSolution.instance.PlayAudio(UniversalAudioSolution.AudioType.Other, ShingrixStatic.Audio.EffectTag, ShingrixStatic.Audio.EffectCountDown);
+            }
+
+            if (timeLeave <= 0) {
                 m_digitalTimer.StopTimer();
                 ExecTimeUpAction();
             }

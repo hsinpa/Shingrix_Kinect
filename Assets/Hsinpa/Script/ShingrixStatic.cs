@@ -45,7 +45,7 @@ namespace Shingrix
         }
 
         public class GameMode {
-            public const int Time = 60;
+            public const int Time = 10;
             public const int WaitReadyTime = 3;
             public const int WaitEndingTime = 5;
             public const float SuperRate = 0.15f;
@@ -85,6 +85,7 @@ namespace Shingrix
             public const string EffectHit3 = "effect@hit_3";
             public const string EffectHit = "effect@hit_{0}";
             public const string EffectHitWrong = "effect@hit_wrong";
+            public const string EffectCountDown = "effect@count_down";
 
             public const string EffectUI= "effect@ui_click";
             public const string EffectEnd = "effect@end";

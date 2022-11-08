@@ -26,3 +26,5 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 058c3cb9fe45ef445b29c2a3a28947b3, type: 3}
   - id: effect@end
     audioClip: {fileID: 8300000, guid: 363ab75f42cbc0e4798c5b45bdacec36, type: 3}
+  - id: effect@count_down
+    audioClip: {fileID: 8300000, guid: b23adc3f2cfb167419e7a5085e7c5a6c, type: 3}

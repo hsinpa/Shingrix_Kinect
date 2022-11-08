@@ -75,7 +75,6 @@ namespace Shingrix.Mode
                 _index = Mathf.Clamp(_index - step, 0, dataCount - 1);
                 _rankModelView.RankScrollView.ScrollToIndex(_index-1, 1);
             }
-            Debug.Log("_index "+ _index);
 
             UniversalAudioSolution.instance.PlayAudio(UniversalAudioSolution.AudioType.UI, ShingrixStatic.Audio.EffectTag, ShingrixStatic.Audio.EffectUI);
         }
