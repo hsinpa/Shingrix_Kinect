@@ -45,7 +45,7 @@ namespace Shingrix
         }
 
         public class GameMode {
-            public const int Time = 10;
+            public const int Time = 60;
             public const int WaitReadyTime = 3;
             public const int WaitEndingTime = 5;
             public const float SuperRate = 0.15f;
